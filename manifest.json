@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Vault Bookmarks",
+  "version": "0.1.0",
+  "description": "Find and save links in a folder of Markdown notes, read straight from disk. No network, no account.",
+  "minimum_chrome_version": "122",
+  "action": {
+    "default_title": "Vault Bookmarks",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["activeTab", "favicon"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      },
+      "description": "Open Vault Bookmarks"
+    }
+  }
+}

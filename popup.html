@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vault Bookmarks</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <nav role="tablist" aria-label="Views">
+      <button id="tab-find" role="tab" aria-selected="true" aria-controls="view-find">Find</button>
+      <button id="tab-save" role="tab" aria-selected="false" aria-controls="view-save">Save</button>
+    </nav>
+    <div class="right">
+      <span id="count" aria-live="polite"></span>
+      <button id="open-setup" class="icon-btn" title="Settings: folder and note format" aria-label="Open settings">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="6" r="2" fill="var(--bg)"/><circle cx="15" cy="12" r="2" fill="var(--bg)"/><circle cx="8" cy="18" r="2" fill="var(--bg)"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="view-message" hidden>
+      <p id="message-text"></p>
+      <button id="message-action" class="primary"></button>
+    </section>
+
+    <section id="view-find" role="tabpanel" hidden>
+      <div class="searchbar">
+        <input id="q" type="search" placeholder="Search title, category, link" autocomplete="off" spellcheck="false" aria-controls="results" aria-label="Search links">
+        <select id="group-filter" aria-label="Filter by tag" hidden>
+          <option value="">All tags</option>
+        </select>
+      </div>
+      <ul id="results" role="listbox" aria-label="Links"></ul>
+      <p id="empty" hidden>No link matches.</p>
+    </section>
+
+    <section id="view-save" role="tabpanel" hidden>
+      <div class="current">
+        <span id="save-icon"></span>
+        <div class="current-text">
+          <div id="save-page-title" class="title"></div>
+          <div id="save-page-url" class="sub"></div>
+        </div>
+      </div>
+      <p id="save-existing" class="notice" hidden></p>
+      <form id="save-form" autocomplete="off">
+        <label><span>Name</span>
+          <input id="f-name" required maxlength="200">
+        </label>
+        <label id="field-category"><span>Category <span class="hint">optional</span></span>
+          <input id="f-category" list="categories" maxlength="80" placeholder="Pick or type a new one">
+          <datalist id="categories"></datalist>
+        </label>
+        <div class="field" id="field-tag">
+          <label for="f-tag"><span>Tag <span class="hint">optional</span></span></label>
+          <input id="f-tag" list="tags" maxlength="60" placeholder="Pick or type a new one">
+          <datalist id="tags"></datalist>
+          <div id="tag-chips" class="chips" role="group" aria-label="Frequent tags"></div>
+        </div>
+        <label id="field-description"><span>Description <span class="hint">optional</span></span>
+          <input id="f-description" maxlength="300">
+        </label>
+        <p id="save-error" class="error" role="alert" hidden></p>
+        <button id="save-button" class="primary" type="submit">Save to vault</button>
+      </form>
+    </section>
+  </main>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

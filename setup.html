@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vault Bookmarks setup</title>
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    body { width: auto; max-width: 640px; margin: 32px auto; padding: 0 16px; max-height: none; display: block; font-size: 13px; }
+    h1 { font-size: 18px; margin: 0 0 8px; }
+    p { margin: 8px 0; }
+    .row { display: flex; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
+    button.secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font: inherit; font-weight: 600; cursor: pointer; }
+    #status { min-height: 1.4em; }
+    .card { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: var(--surface); margin: 14px 0 0; }
+    .card .k { color: var(--muted); font-size: 12px; }
+    .card .v { font-weight: 700; font-size: 16px; word-break: break-all; }
+    .card .d { color: var(--muted); margin-top: 2px; }
+    .card.problem .d { color: var(--danger); }
+    h2 { font-size: 15px; margin: 24px 0 4px; }
+    .s-field { display: flex; flex-direction: column; gap: 3px; margin: 8px 0; font-weight: 600; font-size: 12px; }
+    .s-field > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .s-field input, .s-field textarea { font-size: 13px; }
+    .s-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 12px; }
+    .help { color: var(--muted); font-size: 12px; margin: 2px 0 0; }
+    textarea { width: 100%; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 7px 9px; resize: vertical; }
+
+  </style>
+</head>
+<body>
+  <h1>Vault Bookmarks</h1>
+  <p>Pick the folder that holds your bookmark notes (one note per link). The extension reads and writes only inside that folder, straight from disk. Nothing is sent anywhere.</p>
+  <p>Pick the bookmarks folder itself, not the whole vault.</p>
+  <div id="current" class="card" aria-live="polite">
+    <div class="k">Current folder</div>
+    <div id="cur-name" class="v">None chosen yet</div>
+    <div id="cur-detail" class="d">Pick the folder that holds your bookmark notes.</div>
+  </div>
+  <div class="row">
+    <button id="pick" class="primary">Choose folder</button>
+    <button id="regrant" class="secondary" hidden>Allow access again</button>
+  </div>
+  <p id="status" role="status"></p>
+
+  <h2>Note format</h2>
+  <p>How the extension recognises and writes a bookmark note. The defaults suit most folders; change them to match yours. Names are the frontmatter properties of the notes.</p>
+  <form id="settings-form" autocomplete="off">
+    <div id="settings-fields"></div>
+    <p class="help">Leave a property name empty to turn that field off. A status of Dead greys a link out. Hover a field for its meaning.</p>
+    <label class="s-field"><span>Text under the properties</span>
+      <textarea id="s-body" rows="3" spellcheck="false"></textarea>
+    </label>
+    <p class="help">Optional. Written under the properties of every new note, for example a link to your hub.</p>
+    <p id="settings-error" class="error" role="alert" hidden></p>
+    <div class="row">
+      <button type="submit" class="primary">Save format</button>
+      <button type="button" id="settings-reset" class="secondary">Reset to defaults</button>
+    </div>
+    <p id="settings-status" role="status"></p>
+  </form>
+  <script type="module" src="setup.js"></script>
+</body>
+</html>
