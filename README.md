@@ -71,7 +71,7 @@ Only the top-level `.md` files of the chosen folder, and only their frontmatter 
 ## Tests
 
 ```
-node --test test/
+node --test "test/*.test.mjs"
 ```
 
 Node 22 or later (the version the CI uses), no dependency to install. The unit tests cover the frontmatter reader, the settings, the note writer, the naming rules (including names Windows refuses) and the search. An optional check against a real folder of notes is described at the top of `test/unit.test.mjs`.

@@ -1,6 +1,6 @@
-// Node built-in runner: `node --test test/`. Fixtures are synthetic.
+// Node built-in runner: `node --test "test/*.test.mjs"`. Fixtures are synthetic.
 // Optional parity check on a real folder: VB_NOTES=<folder> VB_YAML=<json of each note parsed by a real YAML
-// parser> [VB_BODY=<text under the properties>] node --test test/
+// parser> [VB_BODY=<text under the properties>] node --test "test/*.test.mjs"
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
