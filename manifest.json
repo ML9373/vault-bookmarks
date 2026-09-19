@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Vault Bookmarks",
   "version": "0.1.0",
-  "description": "Find and save links in a folder of Markdown notes, read straight from disk. No network, no account.",
+  "description": "Find and save links in a folder of Markdown notes, read straight from disk. No server, no account.",
   "minimum_chrome_version": "122",
   "action": {
     "default_title": "Vault Bookmarks",
