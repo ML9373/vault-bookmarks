@@ -56,6 +56,17 @@ select { font: inherit; color: var(--text); background: var(--surface); border: 
 #results { list-style: none; margin: 0; padding: 0 6px 8px; overflow-y: auto; flex: 1; max-height: 470px; }
 #results li { display: grid; grid-template-columns: 24px 1fr auto; gap: 2px 10px; align-items: center; padding: 6px 8px; border-radius: 6px; cursor: pointer; }
 #results li[aria-selected="true"] { background: var(--sel); }
+#results li.link { grid-template-columns: 24px 1fr auto auto; }
+#results li.nested { padding-left: 22px; }
+#results li.group { grid-template-columns: 14px 1fr auto; font-weight: 600; }
+.chev { color: var(--muted); font-size: 10px; transition: transform .12s; }
+li.group[aria-expanded="true"] .chev { transform: rotate(90deg); }
+.group .n { color: var(--muted); font-weight: 400; font-size: 12px; }
+.star { background: none; border: 0; padding: 0 2px; font-size: 15px; line-height: 1; color: var(--muted); cursor: pointer; opacity: 0; }
+li:hover .star, li[aria-selected="true"] .star, .star:focus-visible, .star[aria-pressed="true"] { opacity: 1; }
+.star[aria-pressed="true"] { color: #d99a00; }
+.viewbar { display: flex; padding: 0 12px 8px; }
+#find-error { padding: 0 12px 8px; }
 .favicon { width: 20px; height: 20px; border-radius: 4px; object-fit: contain; }
 .avatar { width: 20px; height: 20px; border-radius: 4px; background: var(--surface); color: var(--muted); display: grid; place-items: center; font-size: 11px; font-weight: 700; text-transform: uppercase; }
 .row-text { min-width: 0; }

@@ -63,6 +63,7 @@ const FIELDS = [
   ['descriptionProperty', 'Description property', 'Empty turns the description field off'],
   ['statusProperty', 'Status property', 'Empty turns it off; a value of Dead greys a link out'],
   ['createdProperty', 'Creation date property', 'Empty turns it off'],
+  ['favoriteProperty', 'Favorite property', 'A checkbox set by the star; empty turns favorites off'],
 ];
 
 const inputs = {};

@@ -1,4 +1,5 @@
-import { loadHandle, loadSettings, permissionState, readIndex, noteExists, writeNote } from './lib/vault.js';
+import { loadHandle, loadSettings, permissionState, readIndex, noteExists, writeNote, setFavorite, loadRecent, saveRecent, loadView, saveView } from './lib/vault.js';
+import { recordOpen, recentItems, groupByCategory } from './lib/recent.js';
 import { search } from './lib/search.js';
 import { formatNote, sanitizeFilename, sanitizeTag, stripTitleCounter, truncateName, localDate, hostOf, suggestFor, tagForCategory, tagsByUse } from './lib/note.js';
 import { getActiveTab, openUrl, openSetup, faviconUrl, closeSelf } from './lib/platform.js';
@@ -7,7 +8,7 @@ const $ = (id) => document.getElementById(id);
 const MAX_ROWS = 60;
 const MAX_CHIPS = 6;
 
-const state = { dir: null, settings: null, items: [], group: '', results: [], active: 0, tab: null };
+const state = { dir: null, settings: null, items: [], group: '', rows: [], active: 0, tab: null, view: 'all', recent: [], open: new Set() };
 
 // ---- views -------------------------------------------------------------------------------
 
@@ -51,36 +52,105 @@ function buildGroupFilter() {
   select.hidden = tags.length === 0;
 }
 
+const EMPTY = {
+  recent: 'Links you open from here show up here.',
+  favorites: 'No favorite yet: click the star next to a link.',
+};
+
+/** Rows on screen: links, or in the All view with no search, one collapsible row per category. */
+function buildRows() {
+  const q = $('q').value.trim();
+  const pool = state.group ? state.items.filter((i) => i.groups.includes(state.group)) : state.items;
+  const link = (item, nested = false) => ({ kind: 'link', item, nested });
+  if (state.view === 'recent') {
+    const recent = recentItems(pool, state.recent);
+    const found = q ? search(recent, q) : recent;
+    return { rows: found.map((i) => link(i)), total: found.length };
+  }
+  if (state.view === 'favorites') {
+    const found = search(pool.filter((i) => i.favorite), q);
+    return { rows: found.map((i) => link(i)), total: found.length };
+  }
+  if (q) {
+    const found = search(pool, q);
+    return { rows: found.slice(0, MAX_ROWS).map((i) => link(i)), total: found.length, capped: found.length > MAX_ROWS };
+  }
+  const rows = [];
+  for (const g of groupByCategory(pool)) {
+    const open = state.open.has(g.name);
+    rows.push({ kind: 'group', name: g.name, count: g.links.length, open });
+    if (open) rows.push(...g.links.map((i) => link(i, true)));
+  }
+  return { rows, total: pool.length };
+}
+
+function linkRow(item, nested) {
+  const li = document.createElement('li');
+  li.className = nested ? 'link nested' : 'link';
+  if (item.status === 'Dead') li.classList.add('dead');
+  const text = document.createElement('div');
+  text.className = 'row-text';
+  const title = document.createElement('div');
+  title.className = 'title';
+  title.textContent = item.title;
+  const sub = document.createElement('div');
+  sub.className = 'sub';
+  sub.textContent = [hostOf(item.url), nested ? '' : item.category, item.description].filter(Boolean).join(' · ');
+  text.append(title, sub);
+  const badge = document.createElement('span');
+  badge.className = 'badge';
+  badge.textContent = item.groups[0] || '';
+  badge.hidden = !item.groups[0];
+  li.append(icon(item.url), text, badge);
+  if (state.settings.favoriteProperty) {
+    const star = document.createElement('button');
+    star.type = 'button';
+    star.className = 'star';
+    star.tabIndex = -1;
+    star.textContent = item.favorite ? '★' : '☆';
+    star.setAttribute('aria-pressed', String(item.favorite));
+    star.setAttribute('aria-label', item.favorite ? 'Remove from favorites' : 'Add to favorites');
+    star.title = star.getAttribute('aria-label');
+    li.append(star);
+  }
+  return li;
+}
+
+function groupRow(row) {
+  const li = document.createElement('li');
+  li.className = 'group';
+  li.setAttribute('aria-expanded', String(row.open));
+  const chev = document.createElement('span');
+  chev.className = 'chev';
+  chev.textContent = '▶';
+  chev.setAttribute('aria-hidden', 'true');
+  const name = document.createElement('span');
+  name.className = 'title';
+  name.textContent = row.name || 'No category';
+  const n = document.createElement('span');
+  n.className = 'n';
+  n.textContent = String(row.count);
+  li.append(chev, name, n);
+  return li;
+}
+
 function renderResults() {
   const list = $('results');
-  state.results = search(state.items, $('q').value, state.group);
-  state.active = Math.min(state.active, Math.max(0, state.results.length - 1));
-  list.replaceChildren();
-  state.results.slice(0, MAX_ROWS).forEach((item, i) => {
-    const li = document.createElement('li');
+  const { rows, total, capped } = buildRows();
+  state.rows = rows;
+  state.active = Math.min(state.active, Math.max(0, rows.length - 1));
+  list.replaceChildren(...rows.map((row, i) => {
+    const li = row.kind === 'group' ? groupRow(row) : linkRow(row.item, row.nested);
     li.setAttribute('role', 'option');
     li.setAttribute('aria-selected', String(i === state.active));
     li.dataset.index = String(i);
-    if (item.status === 'Dead') li.classList.add('dead');
-    const text = document.createElement('div');
-    text.className = 'row-text';
-    const title = document.createElement('div');
-    title.className = 'title';
-    title.textContent = item.title;
-    const sub = document.createElement('div');
-    sub.className = 'sub';
-    sub.textContent = [hostOf(item.url), item.category, item.description].filter(Boolean).join(' · ');
-    text.append(title, sub);
-    const badge = document.createElement('span');
-    badge.className = 'badge';
-    badge.textContent = item.groups[0] || '';
-    badge.hidden = !item.groups[0];
-    li.append(icon(item.url), text, badge);
-    list.append(li);
-  });
-  $('empty').hidden = state.results.length > 0;
-  const n = state.results.length;
-  $('count').textContent = n > MAX_ROWS ? `${MAX_ROWS} of ${n} links` : `${n} link${n === 1 ? '' : 's'}`;
+    return li;
+  }));
+  for (const b of document.querySelectorAll('.seg [data-view]')) b.setAttribute('aria-pressed', String(b.dataset.view === state.view));
+  const filtered = $('q').value.trim() || state.group;
+  $('empty').textContent = !filtered && EMPTY[state.view] ? EMPTY[state.view] : 'No link matches.';
+  $('empty').hidden = rows.length > 0;
+  $('count').textContent = capped ? `${MAX_ROWS} of ${total} links` : `${total} link${total === 1 ? '' : 's'}`;
 }
 
 function setActive(i) {
@@ -91,24 +161,65 @@ function setActive(i) {
   rows[state.active].scrollIntoView({ block: 'nearest' });
 }
 
+function toggleGroup(index, open) {
+  const row = state.rows[index];
+  if (row?.kind !== 'group') return;
+  const next = open ?? !row.open;
+  if (next) state.open.add(row.name); else state.open.delete(row.name);
+  state.active = index;
+  renderResults();
+  setActive(index);
+}
+
 async function openResult(index, background) {
-  const item = state.results[index];
-  if (!item) return;
-  await openUrl(item.url, !background);
+  const row = state.rows[index];
+  if (!row) return;
+  if (row.kind === 'group') return toggleGroup(index);
+  state.recent = recordOpen(state.recent, row.item.url);
+  await saveRecent(state.recent).catch(() => {});
+  await openUrl(row.item.url, !background);
   if (!background) closeSelf();
+}
+
+async function toggleFavorite(index) {
+  const item = state.rows[index]?.item;
+  if (!item) return;
+  $('find-error').hidden = true;
+  try {
+    await setFavorite(state.dir, item.file, item.url, state.settings, !item.favorite);
+    item.favorite = !item.favorite;
+  } catch (err) {
+    $('find-error').textContent = `Could not update "${item.title}": ${err.message}`;
+    $('find-error').hidden = false;
+  }
+  state.active = index;
+  renderResults();
+}
+
+function setView(view) {
+  state.view = view;
+  state.active = 0;
+  saveView(view);
+  renderResults();
+  $('q').focus();
 }
 
 function bindFind() {
   $('q').addEventListener('input', () => { state.active = 0; renderResults(); });
   $('q').addEventListener('keydown', (e) => {
+    const row = state.rows[state.active];
     if (e.key === 'ArrowDown') { e.preventDefault(); setActive(state.active + 1); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(state.active - 1); }
     else if (e.key === 'Enter') { e.preventDefault(); openResult(state.active, e.metaKey || e.ctrlKey); }
+    else if (row?.kind === 'group' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) { e.preventDefault(); toggleGroup(state.active, e.key === 'ArrowRight'); }
   });
   $('results').addEventListener('click', (e) => {
     const li = e.target.closest('li');
-    if (li) openResult(Number(li.dataset.index), e.metaKey || e.ctrlKey);
+    if (!li) return;
+    if (e.target.closest('.star')) toggleFavorite(Number(li.dataset.index));
+    else openResult(Number(li.dataset.index), e.metaKey || e.ctrlKey);
   });
+  for (const b of document.querySelectorAll('.seg [data-view]')) b.addEventListener('click', () => setView(b.dataset.view));
   $('group-filter').addEventListener('change', () => {
     state.group = $('group-filter').value;
     state.active = 0;
@@ -234,6 +345,10 @@ async function boot() {
     return message(`The folder cannot be read (${err.name}). Choose it again.`, 'Open setup', () => openSetup());
   }
   state.tab = await getActiveTab();
+  state.recent = await loadRecent();
+  const view = await loadView();
+  state.view = ['recent', 'all'].includes(view) || (view === 'favorites' && state.settings.favoriteProperty) ? view : 'all';
+  document.querySelector('.seg [data-view="favorites"]').hidden = !state.settings.favoriteProperty;
   buildGroupFilter();
   prepareSave();
   show('find');

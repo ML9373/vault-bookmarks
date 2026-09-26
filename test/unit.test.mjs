@@ -175,3 +175,60 @@ test('parity with a real folder (optional)', { skip: !process.env.VB_NOTES }, ()
   assert.ok(n > 0);
   console.log(`# parity: ${n} notes parsed as the YAML parser does, ${rewritten} rewritten byte for byte`);
 });
+
+test('setFlag adds, replaces and removes one frontmatter line and keeps every other byte', async () => {
+  const { setFlag, isTrue } = await import('../lib/fm.js');
+  const note = '---\ntitle: "A"\ntype: bookmark\nURL: "https://a.example/"\n---\n> **Parent**: [[Hub]]\n\nFavorite: in the body stays\n';
+  const on = setFlag(note, 'Favorite', true);
+  assert.equal(on, note.replace('\n---\n>', '\nFavorite: true\n---\n>'));
+  assert.equal(setFlag(on, 'Favorite', true), on, 'already on: unchanged');
+  assert.equal(setFlag(on, 'Favorite', false), note, 'off restores the original bytes');
+  assert.equal(setFlag(note, 'Favorite', false), note, 'already off: unchanged');
+  assert.equal(setFlag(note.replace('type:', 'Favorite: false\ntype:'), 'Favorite', true), on.replace('Favorite: true\n', '').replace('title: "A"\n', 'title: "A"\nFavorite: true\n'));
+  assert.equal(setFlag('---\nFavorites: x\nFavorite:\n  - a\nURL: u\n---\n', 'Favorite', false), '---\nFavorites: x\nURL: u\n---\n', 'a similar key is left alone, a list value goes with its key');
+  const crlf = '﻿---\r\ntype: bookmark\r\n---\r\nbody\r\n';
+  assert.equal(setFlag(crlf, 'Favorite', true), '﻿---\r\ntype: bookmark\r\nFavorite: true\r\n---\r\nbody\r\n');
+  assert.equal(setFlag('no frontmatter\n', 'Favorite', true), null);
+  assert.equal(setFlag('---\nunclosed: 1\n', 'Favorite', true), null);
+  assert.ok(isTrue('true') && isTrue(' TRUE ') && isTrue('yes') && !isTrue('false') && !isTrue('') && !isTrue(undefined));
+});
+
+test('toItem reads the favorite checkbox; an empty favorite setting turns it off', () => {
+  const text = '---\ntype: bookmark\nURL: "https://a.example/"\nFavorite: true\n---\n';
+  assert.equal(toItem('a.md', text, S).favorite, true);
+  assert.equal(toItem('a.md', text.replace('true', 'false'), S).favorite, false);
+  assert.equal(toItem('a.md', text, { ...S, favoriteProperty: '' }).favorite, false);
+});
+
+test('recent links: newest first, no duplicate, missing notes skipped; categories grouped', async () => {
+  const { recordOpen, recentItems, groupByCategory, RECENT_MAX } = await import('../lib/recent.js');
+  let list = recordOpen([], 'https://docs.example.com/', 1);
+  list = recordOpen(list, 'https://bank.example.org/', 2);
+  list = recordOpen(list, 'https://docs.example.com/?utm_source=x', 3);
+  list = recordOpen(list, 'https://gone.example/', 4);
+  assert.equal(list.length, 3);
+  assert.deepEqual(recentItems(items, list).map((i) => i.title), ['Docs home', 'Bank']);
+  assert.deepEqual(recentItems(items, 'junk'), []);
+  for (let n = 0; n < RECENT_MAX + 5; n++) list = recordOpen(list, `https://x${n}.example/`, n);
+  assert.equal(list.length, RECENT_MAX);
+  const groups = groupByCategory(items);
+  assert.deepEqual(groups.map((g) => g.name), ['Both', 'Health', 'Money', 'Reference', '']);
+  assert.deepEqual(groups.find((g) => g.name === 'Reference').links.map((i) => i.title), ['Docs home', 'Symbols']);
+});
+
+test('setFavorite rewrites only the flag and refuses a note whose link changed on disk', async () => {
+  const { setFavorite } = await import('../lib/vault.js');
+  const files = new Map([['a.md', '---\ntype: bookmark\nURL: "https://a.example/"\n---\nbody\n']]);
+  const dir = {
+    async getFileHandle(name) {
+      if (!files.has(name)) throw Object.assign(new Error('nf'), { name: 'NotFoundError' });
+      return { getFile: async () => ({ text: async () => files.get(name) }), createWritable: async () => ({ write: async (c) => files.set(name, c), close: async () => {} }) };
+    },
+  };
+  await setFavorite(dir, 'a.md', 'https://a.example/', S, true);
+  assert.equal(files.get('a.md'), '---\ntype: bookmark\nURL: "https://a.example/"\nFavorite: true\n---\nbody\n');
+  await setFavorite(dir, 'a.md', 'https://a.example/', S, false);
+  assert.equal(files.get('a.md'), '---\ntype: bookmark\nURL: "https://a.example/"\n---\nbody\n');
+  await assert.rejects(setFavorite(dir, 'a.md', 'https://other.example/', S, true), /changed on disk/);
+  await assert.rejects(setFavorite(dir, 'b.md', 'https://a.example/', S, true));
+});

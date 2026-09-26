@@ -33,6 +33,14 @@
           <option value="">All tags</option>
         </select>
       </div>
+      <div class="viewbar">
+        <div class="seg" role="group" aria-label="Show">
+          <button type="button" data-view="recent" aria-pressed="false">Recent</button>
+          <button type="button" data-view="favorites" aria-pressed="false">Favorites</button>
+          <button type="button" data-view="all" aria-pressed="true">All</button>
+        </div>
+      </div>
+      <p id="find-error" class="error" role="alert" hidden></p>
       <ul id="results" role="listbox" aria-label="Links"></ul>
       <p id="empty" hidden>No link matches.</p>
     </section>
