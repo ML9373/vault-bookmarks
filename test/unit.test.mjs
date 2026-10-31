@@ -225,10 +225,10 @@ test('setFavorite rewrites only the flag and refuses a note whose link changed o
       return { getFile: async () => ({ text: async () => files.get(name) }), createWritable: async () => ({ write: async (c) => files.set(name, c), close: async () => {} }) };
     },
   };
-  await setFavorite(dir, 'a.md', 'https://a.example/', S, true);
+  await setFavorite(dir, { file: 'a.md', url: 'https://a.example/' }, S, true);
   assert.equal(files.get('a.md'), '---\ntype: bookmark\nURL: "https://a.example/"\nFavorite: true\n---\nbody\n');
-  await setFavorite(dir, 'a.md', 'https://a.example/', S, false);
+  await setFavorite(dir, { file: 'a.md', url: 'https://a.example/' }, S, false);
   assert.equal(files.get('a.md'), '---\ntype: bookmark\nURL: "https://a.example/"\n---\nbody\n');
-  await assert.rejects(setFavorite(dir, 'a.md', 'https://other.example/', S, true), /changed on disk/);
-  await assert.rejects(setFavorite(dir, 'b.md', 'https://a.example/', S, true));
+  await assert.rejects(setFavorite(dir, { file: 'a.md', url: 'https://other.example/' }, S, true), /changed on disk/);
+  await assert.rejects(setFavorite(dir, { file: 'b.md', url: 'https://a.example/' }, S, true));
 });

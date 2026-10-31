@@ -14,6 +14,9 @@
     </nav>
     <div class="right">
       <span id="count" aria-live="polite"></span>
+      <button id="open-manage" class="icon-btn" title="Tools: check links, import Chrome bookmarks" aria-label="Open tools">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-.6-.6-2.6z"/></svg>
+      </button>
       <button id="open-setup" class="icon-btn" title="Settings: folder and note format" aria-label="Open settings">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="6" r="2" fill="var(--bg)"/><circle cx="15" cy="12" r="2" fill="var(--bg)"/><circle cx="8" cy="18" r="2" fill="var(--bg)"/></svg>
       </button>
@@ -37,8 +40,10 @@
         <div class="seg" role="group" aria-label="Show">
           <button type="button" data-view="recent" aria-pressed="false">Recent</button>
           <button type="button" data-view="favorites" aria-pressed="false">Favorites</button>
+          <button type="button" data-view="top" aria-pressed="false">Top</button>
           <button type="button" data-view="all" aria-pressed="true">All</button>
         </div>
+        <button type="button" id="dupes" class="linkbtn" aria-pressed="false" hidden></button>
       </div>
       <p id="find-error" class="error" role="alert" hidden></p>
       <ul id="results" role="listbox" aria-label="Links"></ul>
@@ -62,17 +67,42 @@
           <input id="f-category" list="categories" maxlength="80" placeholder="Pick or type a new one">
           <datalist id="categories"></datalist>
         </label>
-        <div class="field" id="field-tag">
-          <label for="f-tag"><span>Tag <span class="hint">optional</span></span></label>
-          <input id="f-tag" list="tags" maxlength="60" placeholder="Pick or type a new one">
-          <datalist id="tags"></datalist>
-          <div id="tag-chips" class="chips" role="group" aria-label="Frequent tags"></div>
-        </div>
+        <div id="save-tags"></div>
         <label id="field-description"><span>Description <span class="hint">optional</span></span>
           <input id="f-description" maxlength="300">
         </label>
         <p id="save-error" class="error" role="alert" hidden></p>
         <button id="save-button" class="primary" type="submit">Save to vault</button>
+        <button id="save-all" class="secondary" type="button" hidden></button>
+        <p id="save-all-note" class="sub" hidden></p>
+      </form>
+    </section>
+
+    <section id="view-edit" role="tabpanel" hidden>
+      <form id="edit-form" autocomplete="off">
+        <div id="edit-file" class="sub"></div>
+        <label><span>Title</span>
+          <input id="e-title" required maxlength="200">
+        </label>
+        <label><span>Link</span>
+          <input id="e-url" type="url" required>
+        </label>
+        <label id="e-field-category"><span>Category <span class="hint">optional</span></span>
+          <input id="e-category" list="categories" maxlength="80" placeholder="Pick or type a new one">
+        </label>
+        <div id="edit-tags"></div>
+        <label id="e-field-description"><span>Description <span class="hint">optional</span></span>
+          <input id="e-description" maxlength="300">
+        </label>
+        <label id="e-field-status"><span>Status</span>
+          <select id="e-status"></select>
+        </label>
+        <p id="edit-error" class="error" role="alert" hidden></p>
+        <div class="actions">
+          <button id="edit-save" class="primary" type="submit">Save changes</button>
+          <button id="edit-cancel" class="secondary" type="button">Cancel</button>
+          <button id="edit-delete" class="danger" type="button">Delete</button>
+        </div>
       </form>
     </section>
   </main>

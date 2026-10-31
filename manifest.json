@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Vault Bookmarks",
-  "version": "0.2.0",
-  "description": "Find and save links in a folder of Markdown notes, read straight from disk. No server, no account.",
+  "version": "0.3.0",
+  "description": "Find, save, edit and clean up links in a folder of Markdown notes, read straight from disk. No server, no account.",
   "minimum_chrome_version": "122",
   "action": {
     "default_title": "Vault Bookmarks",
@@ -18,7 +18,13 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "permissions": ["activeTab", "favicon"],
+  "permissions": [
+    "activeTab",
+    "favicon",
+    "scripting",
+    "tabs",
+    "contextMenus"
+  ],
   "commands": {
     "_execute_action": {
       "suggested_key": {
@@ -27,5 +33,16 @@
       },
       "description": "Open Vault Bookmarks"
     }
+  },
+  "optional_permissions": [
+    "bookmarks"
+  ],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
   }
 }

@@ -22,6 +22,8 @@
     .s-field > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .s-field input, .s-field textarea { font-size: 13px; }
     .s-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 12px; }
+    .s-check { display: flex; align-items: center; gap: 8px; margin: 12px 0 0; font-weight: 600; }
+    .s-check input { width: auto; }
     .help { color: var(--muted); font-size: 12px; margin: 2px 0 0; }
     textarea { width: 100%; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 7px 9px; resize: vertical; }
 
@@ -47,6 +49,8 @@
   <form id="settings-form" autocomplete="off">
     <div id="settings-fields"></div>
     <p class="help">Leave a property name empty to turn that field off. A status of Dead greys a link out. Hover a field for its meaning.</p>
+    <label class="s-check"><input type="checkbox" id="s-subfolders"> <span>Also read the notes in subfolders</span></label>
+    <p class="help">Off by default. When on, a note with no category takes the name of its top-level subfolder as its category. New links are still saved at the top of the folder.</p>
     <label class="s-field"><span>Text under the properties</span>
       <textarea id="s-body" rows="3" spellcheck="false"></textarea>
     </label>

@@ -85,10 +85,11 @@ $('settings-fields').className = 's-grid';
 function fill(values) {
   for (const key of Object.keys(inputs)) inputs[key].value = values[key];
   $('s-body').value = values.body;
+  $('s-subfolders').checked = values.subfolders === 'yes';
 }
 
 function read() {
-  const value = { body: $('s-body').value };
+  const value = { body: $('s-body').value, subfolders: $('s-subfolders').checked ? 'yes' : 'no' };
   for (const key of Object.keys(inputs)) value[key] = inputs[key].value;
   return value;
 }

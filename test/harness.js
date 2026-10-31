@@ -32,6 +32,14 @@ window.__vbTest = {
   getActiveTab: async () => ({ title: q.get('title') || 'Guide: New page | Example Docs', url: q.get('url') || 'https://docs.example.com/guide/new/page' }),
   openUrl: (url, active) => { window.__opened.push({ url, active }); },
   setupUrl: `${root_url}setup.html`,
+  manageUrl: `${root_url}manage.html`,
+  getWindowTabs: async () => [
+    { title: 'Guide: New page | Example Docs', url: 'https://docs.example.com/guide/new/page' },
+    { title: 'Brand new site', url: 'https://fresh.example.net/hello' },
+    { title: 'Another one', url: 'https://other.example.org/a' },
+    { title: 'Settings', url: 'chrome://settings' },
+  ],
+  getPageDescription: async () => 'A page about the new guide.',
   faviconUrl: (u) => (new URL(u).hostname.endsWith('example.com') ? `${root_url}icons/icon32.png` : `/missing/${new URL(u).hostname}.png`),
 };
 

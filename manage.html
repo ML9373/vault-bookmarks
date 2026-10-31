@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vault Bookmarks tools</title>
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    body { width: auto; max-width: 720px; margin: 32px auto; padding: 0 16px; max-height: none; display: block; font-size: 13px; }
+    h1 { font-size: 18px; margin: 0 0 8px; }
+    h2 { font-size: 15px; margin: 28px 0 4px; }
+    p { margin: 8px 0; }
+    .row { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; align-items: center; }
+    .bar { height: 6px; border-radius: 3px; background: var(--surface); overflow: hidden; margin: 8px 0; }
+    .bar > div { height: 100%; width: 0; background: var(--accent); transition: width .1s; }
+    ul.list { list-style: none; margin: 8px 0; padding: 0; border: 1px solid var(--border); border-radius: 8px; max-height: 320px; overflow-y: auto; }
+    ul.list li { display: grid; grid-template-columns: 20px 1fr auto; gap: 8px; align-items: center; padding: 6px 10px; border-bottom: 1px solid var(--border); }
+    ul.list li:last-child { border-bottom: 0; }
+    ul.list input { width: auto; }
+    .tag { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    label.inline { display: flex; gap: 8px; align-items: center; font-weight: 400; }
+    label.inline input { width: auto; }
+  </style>
+</head>
+<body>
+  <h1>Vault Bookmarks tools</h1>
+  <p id="state" role="status"></p>
+  <div class="row"><button id="allow" class="primary" hidden>Allow access to the folder</button></div>
+
+  <section id="tools" hidden>
+    <h2>Check links</h2>
+    <p>Asks each site if the page still exists (a HEAD request, then GET when the site refuses it). Chrome asks once for permission to reach websites; nothing else leaves your machine, and no note is changed until you choose. A page that answers 404 or 410, or a site that does not answer at all, is proposed as <b>Dead</b>; a link marked Dead that answers again is proposed as <b>Active</b>.</p>
+    <p id="check-off" class="error" hidden>Turn on the status property in the setup page first: the check needs somewhere to write it.</p>
+    <div class="row">
+      <button id="check-start" class="primary">Check links</button>
+      <button id="check-stop" class="secondary" hidden>Stop</button>
+      <span id="check-progress" class="sub"></span>
+    </div>
+    <div class="bar" id="check-bar" hidden><div></div></div>
+    <div id="check-results" hidden>
+      <h3 id="broken-title"></h3>
+      <ul class="list" id="broken"></ul>
+      <div class="row"><button id="mark-dead" class="primary">Mark selected as Dead</button></div>
+      <h3 id="back-title"></h3>
+      <ul class="list" id="back"></ul>
+      <div class="row"><button id="mark-active" class="primary">Mark selected as Active</button></div>
+    </div>
+    <p id="check-status" role="status"></p>
+
+    <h2>Import Chrome bookmarks</h2>
+    <p>Reads your Chrome bookmarks (Chrome asks for permission once) and writes one note per link, skipping links the folder already holds. Pick the folders to import.</p>
+    <div class="row"><button id="import-read" class="secondary">Read Chrome bookmarks</button></div>
+    <div id="import-box" hidden>
+      <ul class="list" id="import-folders"></ul>
+      <label class="inline"><input type="checkbox" id="import-category" checked> Use the bookmark folder as the category</label>
+      <label class="inline"><input type="checkbox" id="import-date" checked> Keep the date the bookmark was added</label>
+      <div class="row"><button id="import-go" class="primary"></button></div>
+    </div>
+    <p id="import-status" role="status"></p>
+  </section>
+  <script type="module" src="manage.js"></script>
+</body>
+</html>
