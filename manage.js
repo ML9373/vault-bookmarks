@@ -3,6 +3,8 @@ import { checkLink, pool } from './lib/linkcheck.js';
 import { flattenBookmarks, foldersOf } from './lib/importer.js';
 import { saveLink } from './lib/quicksave.js';
 import { localDate, hostOf, urlKey } from './lib/note.js';
+import { exportBookmarksHtml } from './lib/exporter.js';
+import { msg, plural, localize } from './lib/i18n.js';
 import { requestOrigins, requestBookmarks, getBookmarkTree } from './lib/platform.js';
 
 const $ = (id) => document.getElementById(id);
@@ -10,13 +12,14 @@ const say = (id, text, cls = '') => { $(id).textContent = text; $(id).className 
 const state = { dir: null, settings: null, items: [], found: [], stop: false };
 
 async function boot() {
+  localize();
   const dir = await loadHandle().catch(() => null);
-  if (!dir) return say('state', 'No folder chosen yet: open the setup page from the popup.', 'error');
+  if (!dir) return say('state', msg('mNoFolder'), 'error');
   state.dir = dir;
   state.settings = await loadSettings();
   if ((await permissionState(dir)) !== 'granted') {
     $('allow').hidden = false;
-    return say('state', 'Chrome needs you to allow access to the folder again.');
+    return say('state', msg('msgAllow'));
   }
   await ready();
 }
@@ -24,7 +27,7 @@ async function boot() {
 async function ready() {
   $('allow').hidden = true;
   state.items = await readIndex(state.dir, state.settings);
-  say('state', `${state.items.length} bookmark notes in "${state.dir.name}".`);
+  say('state', msg('mNotes', state.items.length, state.dir.name));
   $('tools').hidden = false;
   $('check-off').hidden = Boolean(state.settings.statusProperty);
   $('check-start').disabled = !state.settings.statusProperty;
@@ -32,7 +35,7 @@ async function ready() {
 
 $('allow').addEventListener('click', async () => {
   if ((await requestPermission(state.dir)) === 'granted') await ready();
-  else say('state', 'Access was not granted.', 'error');
+  else say('state', msg('mDenied'), 'error');
 });
 
 // ---- check links -------------------------------------------------------------------------
@@ -53,7 +56,7 @@ function resultRow(list, item, detail, checked) {
   text.append(title, sub);
   const tag = document.createElement('span');
   tag.className = 'tag';
-  tag.textContent = detail;
+  tag.textContent = detail === 'no answer' ? msg('detailNoAnswer') : detail;
   li.append(box, text, tag);
   li.item = item;
   list.append(li);
@@ -61,8 +64,8 @@ function resultRow(list, item, detail, checked) {
 
 async function startCheck() {
   say('check-status', '');
-  if (!navigator.onLine) return say('check-status', 'You are offline.', 'error');
-  if (!(await requestOrigins())) return say('check-status', 'Permission to reach websites was not granted: the check cannot run.', 'error');
+  if (!navigator.onLine) return say('check-status', msg('offlineNow'), 'error');
+  if (!(await requestOrigins())) return say('check-status', msg('errOrigins'), 'error');
   state.stop = false;
   state.found = [];
   $('check-start').hidden = true;
@@ -74,7 +77,7 @@ async function startCheck() {
   await pool(items, 6, async (item) => {
     const r = await checkLink(item.url);
     state.found.push({ item, ...r });
-    $('check-progress').textContent = `${++done} of ${items.length}`;
+    $('check-progress').textContent = msg('checkProgress', ++done, items.length);
     $('check-bar').firstElementChild.style.width = `${(done / items.length) * 100}%`;
   }, () => state.stop);
   $('check-start').hidden = false;
@@ -89,13 +92,13 @@ async function startCheck() {
   $('back').replaceChildren();
   for (const f of broken) resultRow($('broken'), f.item, f.detail, !offline);
   for (const f of back) resultRow($('back'), f.item, f.detail, true);
-  $('broken-title').textContent = `${broken.length} link${broken.length === 1 ? '' : 's'} to mark as Dead`;
-  $('back-title').textContent = `${back.length} Dead link${back.length === 1 ? '' : 's'} answering again`;
+  $('broken-title').textContent = plural(broken.length, 'brokenOne', 'brokenMany');
+  $('back-title').textContent = plural(back.length, 'backOne', 'backMany');
   $('mark-dead').hidden = $('broken').hidden = !broken.length;
   $('mark-active').hidden = $('back').hidden = !back.length;
   $('check-results').hidden = false;
   const unknown = state.found.filter((f) => f.verdict === 'unknown').length;
-  say('check-status', `${state.stop ? 'Stopped after' : 'Checked'} ${checked} links.${unknown ? ` ${unknown} gave no clear answer (timeout, login wall, rate limit) and are left alone.` : ''}${offline ? ' Almost no site answered: the network may be down, so nothing is pre-selected.' : ''}`);
+  say('check-status', [msg(state.stop ? 'checkStopped' : 'checkDone', checked), unknown ? msg('checkUnknown', unknown) : '', offline ? msg('checkOfflineHint') : ''].filter(Boolean).join(' '));
 }
 
 async function apply(listId, status, button) {
@@ -108,7 +111,7 @@ async function apply(listId, status, button) {
   }
   $(button).disabled = false;
   state.items = await readIndex(state.dir, state.settings);
-  say('check-status', `${done} link${done === 1 ? '' : 's'} set to ${status}${failed ? `, ${failed} could not be updated (changed on disk?)` : ''}.`);
+  say('check-status', [msg('applied', plural(done, 'linkOne', 'linkMany'), status), failed ? msg('appliedFailed', failed) : ''].filter(Boolean).join(' '));
 }
 
 $('check-start').addEventListener('click', startCheck);
@@ -128,13 +131,13 @@ function selected() {
 
 function refreshCount() {
   const n = selected().length;
-  $('import-go').textContent = `Import ${n} new link${n === 1 ? '' : 's'}`;
+  $('import-go').textContent = plural(n, 'importGoOne', 'importGoMany');
   $('import-go').disabled = n === 0;
 }
 
 $('import-read').addEventListener('click', async () => {
   say('import-status', '');
-  if (!(await requestBookmarks())) return say('import-status', 'Permission to read bookmarks was not granted.', 'error');
+  if (!(await requestBookmarks())) return say('import-status', msg('errBookmarksPerm'), 'error');
   links = flattenBookmarks(await getBookmarkTree());
   $('import-folders').replaceChildren(...foldersOf(links).map(([folder, n]) => {
     const li = document.createElement('li');
@@ -144,7 +147,7 @@ $('import-read').addEventListener('click', async () => {
     box.checked = true;
     box.addEventListener('change', refreshCount);
     const name = document.createElement('div');
-    name.textContent = folder || '(top level)';
+    name.textContent = folder || msg('importTop');
     const count = document.createElement('span');
     count.className = 'tag';
     count.textContent = String(n);
@@ -153,7 +156,7 @@ $('import-read').addEventListener('click', async () => {
   }));
   $('import-box').hidden = false;
   refreshCount();
-  say('import-status', `${links.length} http(s) bookmarks found.`);
+  say('import-status', msg('importFound', links.length));
 });
 
 $('import-go').addEventListener('click', async () => {
@@ -172,11 +175,23 @@ $('import-go').addEventListener('click', async () => {
       });
       if (r.status === 'saved') saved++;
     } catch { failed++; }
-    say('import-status', `${saved + failed} of ${todo.length}…`);
+    say('import-status', msg('importProgress', saved + failed, todo.length));
   }
   state.items = await readIndex(state.dir, state.settings);
-  say('import-status', `Imported ${saved} note${saved === 1 ? '' : 's'}${failed ? `, ${failed} failed` : ''}.`);
+  say('import-status', [plural(saved, 'importDoneOne', 'importDoneMany'), failed ? msg('importFailed', failed) : ''].filter(Boolean).join(' '));
   refreshCount();
 });
 
-boot().catch((e) => say('state', `Could not start: ${e.message}`, 'error'));
+// ---- export ------------------------------------------------------------------------------
+
+$('export-go').addEventListener('click', () => {
+  const includeDead = $('export-dead').checked;
+  const html = exportBookmarksHtml(state.items, { includeDead });
+  const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+  const a = Object.assign(document.createElement('a'), { href: url, download: 'bookmarks.html' });
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  say('export-status', msg('exportDone', state.items.filter((i) => includeDead || i.status !== 'Dead').length));
+});
+
+boot().catch((e) => say('state', msg('mStartErr', e.message), 'error'));

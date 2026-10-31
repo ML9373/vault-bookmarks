@@ -4,10 +4,15 @@ import { loadHandle, loadSettings, permissionState, readIndex } from './lib/vaul
 import { saveLink } from './lib/quicksave.js';
 import { titleFromUrl } from './lib/note.js';
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({ id: 'save-link', title: 'Save link to vault', contexts: ['link'] });
-  chrome.contextMenus.create({ id: 'save-page', title: 'Save page to vault', contexts: ['page'] });
-});
+// Menu titles follow the browser's language: they are rebuilt each time the worker starts.
+function buildMenus() {
+  chrome.contextMenus.removeAll(() => {
+    chrome.contextMenus.create({ id: 'save-link', title: chrome.i18n.getMessage('menuSaveLink'), contexts: ['link'] });
+    chrome.contextMenus.create({ id: 'save-page', title: chrome.i18n.getMessage('menuSavePage'), contexts: ['page'] });
+  });
+}
+chrome.runtime.onInstalled.addListener(buildMenus);
+chrome.runtime.onStartup.addListener(buildMenus);
 
 async function flash(text, color) {
   await chrome.action.setBadgeBackgroundColor({ color });

@@ -30,35 +30,35 @@
   </style>
 </head>
 <body>
-  <h1>Vault Bookmarks</h1>
-  <p>Pick the folder that holds your bookmark notes (one note per link). The extension reads and writes only inside that folder, straight from disk. Nothing is sent anywhere.</p>
-  <p>Pick the bookmarks folder itself, not the whole vault.</p>
+  <h1 data-i18n="sTitle">Vault Bookmarks</h1>
+  <p data-i18n="sIntro1"></p>
+  <p data-i18n="sIntro2"></p>
   <div id="current" class="card" aria-live="polite">
-    <div class="k">Current folder</div>
-    <div id="cur-name" class="v">None chosen yet</div>
-    <div id="cur-detail" class="d">Pick the folder that holds your bookmark notes.</div>
+    <div class="k" data-i18n="sCurrent">Current folder</div>
+    <div id="cur-name" class="v" data-i18n="sNone">None chosen yet</div>
+    <div id="cur-detail" class="d" data-i18n="sPickHint"></div>
   </div>
   <div class="row">
-    <button id="pick" class="primary">Choose folder</button>
-    <button id="regrant" class="secondary" hidden>Allow access again</button>
+    <button id="pick" class="primary" data-i18n="sChoose">Choose folder</button>
+    <button id="regrant" class="secondary" hidden data-i18n="sRegrant">Allow access again</button>
   </div>
   <p id="status" role="status"></p>
 
-  <h2>Note format</h2>
-  <p>How the extension recognises and writes a bookmark note. The defaults suit most folders; change them to match yours. Names are the frontmatter properties of the notes.</p>
+  <h2 data-i18n="sFormatH">Note format</h2>
+  <p data-i18n="sFormatIntro"></p>
   <form id="settings-form" autocomplete="off">
     <div id="settings-fields"></div>
-    <p class="help">Leave a property name empty to turn that field off. A status of Dead greys a link out. Hover a field for its meaning.</p>
-    <label class="s-check"><input type="checkbox" id="s-subfolders"> <span>Also read the notes in subfolders</span></label>
-    <p class="help">Off by default. When on, a note with no category takes the name of its top-level subfolder as its category. New links are still saved at the top of the folder.</p>
-    <label class="s-field"><span>Text under the properties</span>
+    <p class="help" data-i18n="sHelp"></p>
+    <label class="s-check"><input type="checkbox" id="s-subfolders"> <span data-i18n="sSubfolders">Also read the notes in subfolders</span></label>
+    <p class="help" data-i18n="sSubfoldersHelp"></p>
+    <label class="s-field"><span data-i18n="sBody">Text under the properties</span>
       <textarea id="s-body" rows="3" spellcheck="false"></textarea>
     </label>
-    <p class="help">Optional. Written under the properties of every new note, for example a link to your hub.</p>
+    <p class="help" data-i18n="sBodyHelp"></p>
     <p id="settings-error" class="error" role="alert" hidden></p>
     <div class="row">
-      <button type="submit" class="primary">Save format</button>
-      <button type="button" id="settings-reset" class="secondary">Reset to defaults</button>
+      <button type="submit" class="primary" data-i18n="sSaveFormat">Save format</button>
+      <button type="button" id="settings-reset" class="secondary" data-i18n="sReset">Reset to defaults</button>
     </div>
     <p id="settings-status" role="status"></p>
   </form>

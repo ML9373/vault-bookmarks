@@ -72,6 +72,15 @@ li:hover .act, li[aria-selected="true"] .act, .act:focus-visible, .act[aria-pres
 .act.del:hover { color: var(--danger); }
 .act.armed { color: var(--accent-text); background: var(--danger); font-size: 12px; font-weight: 600; padding: 2px 6px; }
 .viewbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px 8px; }
+.vb-right { display: flex; align-items: center; gap: 6px; }
+#bulk { display: flex; flex-direction: column; gap: 6px; padding: 0 12px 8px; }
+.bulk-row { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.bulk-row input[type=text], .bulk-row input:not([type]) { flex: 1; min-width: 0; }
+label.inline { display: flex; flex-direction: row; gap: 6px; align-items: center; font-weight: 400; }
+label.inline input { width: auto; }
+.toast { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 12px 8px; }
+#results li.picking { grid-template-columns: 18px 24px 1fr auto; }
+#results li.picking input { width: auto; }
 .linkbtn { background: none; border: 0; color: var(--muted); font: inherit; font-size: 12px; text-decoration: underline; cursor: pointer; padding: 2px 4px; }
 .linkbtn[aria-pressed="true"] { color: var(--accent); font-weight: 600; }
 #find-error { padding: 0 12px 8px; }

@@ -9,15 +9,15 @@
 <body>
   <header>
     <nav role="tablist" aria-label="Views">
-      <button id="tab-find" role="tab" aria-selected="true" aria-controls="view-find">Find</button>
-      <button id="tab-save" role="tab" aria-selected="false" aria-controls="view-save">Save</button>
+      <button id="tab-find" role="tab" aria-selected="true" aria-controls="view-find" data-i18n="tabFind">Find</button>
+      <button id="tab-save" role="tab" aria-selected="false" aria-controls="view-save" data-i18n="tabSave">Save</button>
     </nav>
     <div class="right">
       <span id="count" aria-live="polite"></span>
-      <button id="open-manage" class="icon-btn" title="Tools: check links, import Chrome bookmarks" aria-label="Open tools">
+      <button id="open-manage" class="icon-btn" data-i18n-title="toolsTitle" data-i18n-aria="toolsLabel" title="Tools: check links, export, import Chrome bookmarks" aria-label="Open tools">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-.6-.6-2.6z"/></svg>
       </button>
-      <button id="open-setup" class="icon-btn" title="Settings: folder and note format" aria-label="Open settings">
+      <button id="open-setup" class="icon-btn" data-i18n-title="settingsTitle" data-i18n-aria="settingsLabel" title="Settings: folder and note format" aria-label="Open settings">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="6" r="2" fill="var(--bg)"/><circle cx="15" cy="12" r="2" fill="var(--bg)"/><circle cx="8" cy="18" r="2" fill="var(--bg)"/></svg>
       </button>
     </div>
@@ -31,23 +31,43 @@
 
     <section id="view-find" role="tabpanel" hidden>
       <div class="searchbar">
-        <input id="q" type="search" placeholder="Search title, category, link" autocomplete="off" spellcheck="false" aria-controls="results" aria-label="Search links">
-        <select id="group-filter" aria-label="Filter by tag" hidden>
-          <option value="">All tags</option>
+        <input id="q" type="search" data-i18n-placeholder="searchPlaceholder" data-i18n-aria="searchLabel" placeholder="Search title, category, link" autocomplete="off" spellcheck="false" aria-controls="results" aria-label="Search links">
+        <select id="group-filter" data-i18n-aria="filterTagLabel" aria-label="Filter by tag" hidden>
+          <option value="" data-i18n="allTags">All tags</option>
         </select>
       </div>
       <div class="viewbar">
-        <div class="seg" role="group" aria-label="Show">
-          <button type="button" data-view="recent" aria-pressed="false">Recent</button>
-          <button type="button" data-view="favorites" aria-pressed="false">Favorites</button>
-          <button type="button" data-view="top" aria-pressed="false">Top</button>
-          <button type="button" data-view="all" aria-pressed="true">All</button>
+        <div class="seg" role="group" data-i18n-aria="showLabel" aria-label="Show">
+          <button type="button" data-view="recent" aria-pressed="false" data-i18n="viewRecent">Recent</button>
+          <button type="button" data-view="favorites" aria-pressed="false" data-i18n="viewFavorites">Favorites</button>
+          <button type="button" data-view="top" aria-pressed="false" data-i18n="viewTop">Top</button>
+          <button type="button" data-view="all" aria-pressed="true" data-i18n="viewAll">All</button>
         </div>
-        <button type="button" id="dupes" class="linkbtn" aria-pressed="false" hidden></button>
+        <div class="vb-right">
+          <button type="button" id="dupes" class="linkbtn" aria-pressed="false" hidden></button>
+          <button type="button" id="select-toggle" class="linkbtn" aria-pressed="false" data-i18n="selectToggle">Select</button>
+        </div>
+      </div>
+      <div id="bulk" hidden>
+        <div class="bulk-row">
+          <label class="inline"><input type="checkbox" id="bulk-all"> <span data-i18n="selectAll">Select all listed</span></label>
+          <span id="bulk-count" class="sub"></span>
+        </div>
+        <div class="bulk-row">
+          <input id="bulk-tag" maxlength="60" data-i18n-placeholder="bulkTagPlaceholder" placeholder="Tag to add" list="tags-all">
+          <datalist id="tags-all"></datalist>
+          <button type="button" id="bulk-add-tag" class="secondary" data-i18n="bulkAddTag">Add tag</button>
+        </div>
+        <div class="bulk-row" id="bulk-cat-row">
+          <input id="bulk-cat" maxlength="80" data-i18n-placeholder="bulkCatPlaceholder" placeholder="Category to set" list="categories">
+          <button type="button" id="bulk-set-cat" class="secondary" data-i18n="bulkSetCat">Set category</button>
+        </div>
+        <div class="bulk-row"><button type="button" id="bulk-delete" class="danger" data-i18n="bulkDelete">Delete selected</button></div>
       </div>
       <p id="find-error" class="error" role="alert" hidden></p>
-      <ul id="results" role="listbox" aria-label="Links"></ul>
-      <p id="empty" hidden>No link matches.</p>
+      <div id="toast" class="notice toast" role="status" hidden><span id="toast-text"></span> <button type="button" id="toast-undo" class="linkbtn" data-i18n="undo">Undo</button></div>
+      <ul id="results" role="listbox" data-i18n-aria="linksLabel" aria-label="Links"></ul>
+      <p id="empty" hidden></p>
     </section>
 
     <section id="view-save" role="tabpanel" hidden>
@@ -60,19 +80,19 @@
       </div>
       <p id="save-existing" class="notice" hidden></p>
       <form id="save-form" autocomplete="off">
-        <label><span>Name</span>
+        <label><span data-i18n="fieldName">Name</span>
           <input id="f-name" required maxlength="200">
         </label>
-        <label id="field-category"><span>Category <span class="hint">optional</span></span>
-          <input id="f-category" list="categories" maxlength="80" placeholder="Pick or type a new one">
+        <label id="field-category"><span><span data-i18n="fieldCategory">Category</span> <span class="hint" data-i18n="optional">optional</span></span>
+          <input id="f-category" list="categories" maxlength="80" data-i18n-placeholder="pickOrType" placeholder="Pick or type a new one">
           <datalist id="categories"></datalist>
         </label>
         <div id="save-tags"></div>
-        <label id="field-description"><span>Description <span class="hint">optional</span></span>
+        <label id="field-description"><span><span data-i18n="fieldDescription">Description</span> <span class="hint" data-i18n="optional">optional</span></span>
           <input id="f-description" maxlength="300">
         </label>
         <p id="save-error" class="error" role="alert" hidden></p>
-        <button id="save-button" class="primary" type="submit">Save to vault</button>
+        <button id="save-button" class="primary" type="submit" data-i18n="saveButton">Save to vault</button>
         <button id="save-all" class="secondary" type="button" hidden></button>
         <p id="save-all-note" class="sub" hidden></p>
       </form>
@@ -81,27 +101,27 @@
     <section id="view-edit" role="tabpanel" hidden>
       <form id="edit-form" autocomplete="off">
         <div id="edit-file" class="sub"></div>
-        <label><span>Title</span>
+        <label><span data-i18n="fieldTitle">Title</span>
           <input id="e-title" required maxlength="200">
         </label>
-        <label><span>Link</span>
+        <label><span data-i18n="fieldLink">Link</span>
           <input id="e-url" type="url" required>
         </label>
-        <label id="e-field-category"><span>Category <span class="hint">optional</span></span>
-          <input id="e-category" list="categories" maxlength="80" placeholder="Pick or type a new one">
+        <label id="e-field-category"><span><span data-i18n="fieldCategory">Category</span> <span class="hint" data-i18n="optional">optional</span></span>
+          <input id="e-category" list="categories" maxlength="80" data-i18n-placeholder="pickOrType" placeholder="Pick or type a new one">
         </label>
         <div id="edit-tags"></div>
-        <label id="e-field-description"><span>Description <span class="hint">optional</span></span>
+        <label id="e-field-description"><span><span data-i18n="fieldDescription">Description</span> <span class="hint" data-i18n="optional">optional</span></span>
           <input id="e-description" maxlength="300">
         </label>
-        <label id="e-field-status"><span>Status</span>
+        <label id="e-field-status"><span data-i18n="fieldStatus">Status</span>
           <select id="e-status"></select>
         </label>
         <p id="edit-error" class="error" role="alert" hidden></p>
         <div class="actions">
-          <button id="edit-save" class="primary" type="submit">Save changes</button>
-          <button id="edit-cancel" class="secondary" type="button">Cancel</button>
-          <button id="edit-delete" class="danger" type="button">Delete</button>
+          <button id="edit-save" class="primary" type="submit" data-i18n="editSave">Save changes</button>
+          <button id="edit-cancel" class="secondary" type="button" data-i18n="cancel">Cancel</button>
+          <button id="edit-delete" class="danger" type="button" data-i18n="delete">Delete</button>
         </div>
       </form>
     </section>

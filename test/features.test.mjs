@@ -172,3 +172,53 @@ test('checkLink: 404 is broken (also by GET), HEAD-only refusal is ok, silence i
   const slow = async (_u, { signal }) => new Promise((_, rej) => signal.addEventListener('abort', () => rej(Object.assign(new Error('a'), { name: 'AbortError' }))));
   assert.equal((await checkLink('u', { fetchFn: slow, timeout: 10 })).verdict, 'unknown');
 });
+
+test('locales: same keys everywhere, every key used in the code exists, placeholders match', async () => {
+  const fs = await import('node:fs');
+  const load = (l) => JSON.parse(fs.readFileSync(new URL(`../_locales/${l}/messages.json`, import.meta.url), 'utf8'));
+  const en = load('en');
+  const fr = load('fr');
+  assert.deepEqual(Object.keys(fr).sort(), Object.keys(en).sort());
+  for (const k of Object.keys(en)) assert.deepEqual(Object.keys(fr[k].placeholders || {}).sort(), Object.keys(en[k].placeholders || {}).sort(), `placeholders of ${k}`);
+  const files = ['popup.html', 'popup.js', 'manage.html', 'manage.js', 'setup.html', 'setup.js', 'background.js', 'manifest.json', 'lib/tagpicker.js'];
+  const used = new Set();
+  for (const f of files) {
+    const text = fs.readFileSync(new URL(`../${f}`, import.meta.url), 'utf8');
+    for (const m of text.matchAll(/(?:msg|plural|getMessage)\(\s*(?:[^'"()]*,\s*)?'(\w+)'/g)) used.add(m[1]);
+    for (const m of text.matchAll(/data-i18n(?:-\w+)?="(\w+)"/g)) used.add(m[1]);
+    for (const m of text.matchAll(/__MSG_(\w+)__/g)) used.add(m[1]);
+    for (const m of text.matchAll(/'(?:e|h|f|s)[A-Z]\w+'/g)) used.add(m[0].slice(1, -1));
+  }
+  for (const m of fs.readFileSync(new URL('../popup.js', import.meta.url), 'utf8').matchAll(/(?:recent|favorites|top|duplicates): '(empty\w+)'/g)) used.add(m[1]);
+  for (const key of used) if (!(key in en)) assert.fail(`missing message: ${key}`);
+  const source = files.map((f) => fs.readFileSync(new URL(`../${f}`, import.meta.url), 'utf8')).join('\n');
+  const unused = Object.keys(en).filter((k) => !new RegExp(`['"]${k}['"]|__MSG_${k}__`).test(source));
+  assert.deepEqual(unused, [], 'keys never used');
+});
+
+test('exportBookmarksHtml: folders by category, tags kept, Dead left out unless asked, text escaped', async () => {
+  const { exportBookmarksHtml } = await import('../lib/exporter.js');
+  const items = [
+    { title: 'A & B', url: 'https://a.example/?x=1&y="2"', category: 'Ref', groups: ['t1', 't2'], status: 'Active' },
+    { title: 'Loose', url: 'https://l.example/', category: '', groups: [], status: 'Active' },
+    { title: 'Gone', url: 'https://g.example/', category: 'Ref', groups: [], status: 'Dead' },
+  ];
+  const html = exportBookmarksHtml(items);
+  assert.match(html, /<DT><H3>Ref<\/H3>/);
+  assert.match(html, /<A HREF="https:\/\/a.example\/\?x=1&amp;y=&quot;2&quot;" TAGS="t1,t2">A &amp; B<\/A>/);
+  assert.match(html, /<DT><A HREF="https:\/\/l.example\/">Loose<\/A>/);
+  assert.doesNotMatch(html, /Gone/);
+  assert.match(exportBookmarksHtml(items, { includeDead: true }), /Gone/);
+});
+
+test('restoreNote puts a deleted note back and refuses to replace one', async () => {
+  const { restoreNote } = await import('../lib/vault.js');
+  const tree = { 'a.md': NOTE };
+  const root = folder(tree);
+  const items = await readIndex(root, S);
+  const text = await deleteNote(root, items[0], S);
+  assert.equal(text, NOTE);
+  await restoreNote(root, items[0], text);
+  assert.equal(tree['a.md'], NOTE);
+  await assert.rejects(restoreNote(root, items[0], 'other'), /already exists/);
+});

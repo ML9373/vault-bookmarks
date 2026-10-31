@@ -1,0 +1,832 @@
+{
+  "extName": {
+    "message": "Vault Bookmarks"
+  },
+  "extDescription": {
+    "message": "Find, save, edit and clean up links in a folder of Markdown notes, read straight from disk. No server, no account."
+  },
+  "actionTitle": {
+    "message": "Vault Bookmarks"
+  },
+  "commandDesc": {
+    "message": "Open Vault Bookmarks"
+  },
+  "menuSaveLink": {
+    "message": "Save link to vault"
+  },
+  "menuSavePage": {
+    "message": "Save page to vault"
+  },
+  "tabFind": {
+    "message": "Find"
+  },
+  "tabSave": {
+    "message": "Save"
+  },
+  "toolsTitle": {
+    "message": "Tools: check links, export, import Chrome bookmarks"
+  },
+  "toolsLabel": {
+    "message": "Open tools"
+  },
+  "settingsTitle": {
+    "message": "Settings: folder and note format"
+  },
+  "settingsLabel": {
+    "message": "Open settings"
+  },
+  "searchPlaceholder": {
+    "message": "Search title, category, link"
+  },
+  "searchLabel": {
+    "message": "Search links"
+  },
+  "allTags": {
+    "message": "All tags"
+  },
+  "filterTagLabel": {
+    "message": "Filter by tag"
+  },
+  "showLabel": {
+    "message": "Show"
+  },
+  "viewRecent": {
+    "message": "Recent"
+  },
+  "viewFavorites": {
+    "message": "Favorites"
+  },
+  "viewTop": {
+    "message": "Top"
+  },
+  "viewAll": {
+    "message": "All"
+  },
+  "linksLabel": {
+    "message": "Links"
+  },
+  "noMatch": {
+    "message": "No link matches."
+  },
+  "fieldName": {
+    "message": "Name"
+  },
+  "fieldTitle": {
+    "message": "Title"
+  },
+  "fieldLink": {
+    "message": "Link"
+  },
+  "fieldCategory": {
+    "message": "Category"
+  },
+  "fieldDescription": {
+    "message": "Description"
+  },
+  "fieldStatus": {
+    "message": "Status"
+  },
+  "optional": {
+    "message": "optional"
+  },
+  "pickOrType": {
+    "message": "Pick or type a new one"
+  },
+  "saveButton": {
+    "message": "Save to vault"
+  },
+  "editSave": {
+    "message": "Save changes"
+  },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "tagsLabel": {
+    "message": "Tags"
+  },
+  "tagsHint": {
+    "message": "optional, Enter or comma adds one"
+  },
+  "tagRemove": {
+    "message": "Remove $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "frequentTags": {
+    "message": "Frequent tags"
+  },
+  "msgChoose": {
+    "message": "Choose the folder that holds your bookmark notes."
+  },
+  "openSetup": {
+    "message": "Open setup"
+  },
+  "msgAllow": {
+    "message": "Chrome needs you to allow access to the folder again."
+  },
+  "allowAccess": {
+    "message": "Allow access"
+  },
+  "msgFolderErr": {
+    "message": "The folder cannot be read ($P1$). Choose it again.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "emptyRecent": {
+    "message": "Links you open from here show up here."
+  },
+  "emptyFavorites": {
+    "message": "No favorite yet: click the star next to a link."
+  },
+  "emptyTop": {
+    "message": "Links you open from here are counted: the most opened come first."
+  },
+  "emptyDuplicates": {
+    "message": "No duplicate: every link is saved once."
+  },
+  "actRemoveFav": {
+    "message": "Remove from favorites"
+  },
+  "actAddFav": {
+    "message": "Add to favorites"
+  },
+  "actEdit": {
+    "message": "Edit (Ctrl or Cmd+E)"
+  },
+  "actDelete": {
+    "message": "Delete"
+  },
+  "deleteArmed": {
+    "message": "Delete for good?"
+  },
+  "deleteArmedLabel": {
+    "message": "Click again to delete this note for good"
+  },
+  "noCategory": {
+    "message": "No category"
+  },
+  "dupesBack": {
+    "message": "Back to all"
+  },
+  "dupesOne": {
+    "message": "1 duplicate"
+  },
+  "dupesMany": {
+    "message": "$P1$ duplicates",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "linkOne": {
+    "message": "1 link"
+  },
+  "linkMany": {
+    "message": "$P1$ links",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "countCapped": {
+    "message": "$P1$ of $P2$ links",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "errUpdate": {
+    "message": "Could not update \"$P1$\": $P2$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "errDelete": {
+    "message": "Could not delete \"$P1$\": $P2$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "toastDeleted": {
+    "message": "\"$P1$\" deleted.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastDeletedMany": {
+    "message": "$P1$ notes deleted.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "undo": {
+    "message": "Undo"
+  },
+  "toastRestored": {
+    "message": "Restored."
+  },
+  "errRestore": {
+    "message": "Could not restore: $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectToggle": {
+    "message": "Select"
+  },
+  "selectDone": {
+    "message": "Done"
+  },
+  "selectAll": {
+    "message": "Select all listed"
+  },
+  "selectedN": {
+    "message": "$P1$ selected",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bulkTagPlaceholder": {
+    "message": "Tag to add"
+  },
+  "bulkAddTag": {
+    "message": "Add tag"
+  },
+  "bulkCatPlaceholder": {
+    "message": "Category to set"
+  },
+  "bulkSetCat": {
+    "message": "Set category"
+  },
+  "bulkDelete": {
+    "message": "Delete selected"
+  },
+  "bulkDeleteArmed": {
+    "message": "Delete $P1$ for good?",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bulkUpdated": {
+    "message": "$P1$ updated.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bulkFailed": {
+    "message": "$P1$ failed.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "editFile": {
+    "message": "$P1$: the file keeps its name, so links to it keep working.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "errTitleEmpty": {
+    "message": "The title is empty."
+  },
+  "errUrlBad": {
+    "message": "The link must be an http(s) address."
+  },
+  "errTagBad": {
+    "message": "That tag is not valid: use letters, digits, \"_\", \"-\" or \"/\", and at least one non-digit."
+  },
+  "errUrlDup": {
+    "message": "Another note already holds this link."
+  },
+  "errEditWrite": {
+    "message": "Could not update the note: $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "noPage": {
+    "message": "No page"
+  },
+  "errNotSavable": {
+    "message": "This page cannot be saved: only http(s) links are kept."
+  },
+  "alreadySaved": {
+    "message": "Already saved as \"$P1$\".",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "alreadySavedIn": {
+    "message": "Already saved as \"$P1$\" ($P2$).",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "saveToFolder": {
+    "message": "Save to \"$P1$\"",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "saveAllN": {
+    "message": "Save all $P1$ open tabs",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "saveAllConfirm": {
+    "message": "Write $P1$ notes? Click again",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "saveAllHint": {
+    "message": "Each tab gets the category and tag the notes of its site already use."
+  },
+  "savedOne": {
+    "message": "Saved 1 note"
+  },
+  "savedMany": {
+    "message": "Saved $P1$ notes",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "failedN": {
+    "message": "$P1$ failed",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "errNameEmpty": {
+    "message": "The name is empty once forbidden characters are removed."
+  },
+  "errNameClash": {
+    "message": "A note named \"$P1$\" already exists. Choose another name.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "errWrite": {
+    "message": "Could not write the note: $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "savedAs": {
+    "message": "Saved as \"$P1$\".",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "mTitle": {
+    "message": "Vault Bookmarks tools"
+  },
+  "mAllowBtn": {
+    "message": "Allow access to the folder"
+  },
+  "mNoFolder": {
+    "message": "No folder chosen yet: open the setup page from the popup."
+  },
+  "mDenied": {
+    "message": "Access was not granted."
+  },
+  "mNotes": {
+    "message": "$P1$ bookmark notes in \"$P2$\".",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "mStartErr": {
+    "message": "Could not start: $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkH": {
+    "message": "Check links"
+  },
+  "checkIntro": {
+    "message": "Asks each site if the page still exists (a HEAD request, then GET when the site refuses it). Chrome asks once for permission to reach websites; nothing else leaves your machine, and no note is changed until you choose. A page that answers 404 or 410, or a site that does not answer at all, is proposed as Dead; a link marked Dead that answers again is proposed as Active."
+  },
+  "checkOff": {
+    "message": "Turn on the status property in the setup page first: the check needs somewhere to write it."
+  },
+  "checkStart": {
+    "message": "Check links"
+  },
+  "checkStop": {
+    "message": "Stop"
+  },
+  "checkProgress": {
+    "message": "$P1$ of $P2$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "markDead": {
+    "message": "Mark selected as Dead"
+  },
+  "markActive": {
+    "message": "Mark selected as Active"
+  },
+  "brokenOne": {
+    "message": "1 link to mark as Dead"
+  },
+  "brokenMany": {
+    "message": "$P1$ links to mark as Dead",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "backOne": {
+    "message": "1 Dead link answering again"
+  },
+  "backMany": {
+    "message": "$P1$ Dead links answering again",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "offlineNow": {
+    "message": "You are offline."
+  },
+  "errOrigins": {
+    "message": "Permission to reach websites was not granted: the check cannot run."
+  },
+  "detailNoAnswer": {
+    "message": "no answer"
+  },
+  "checkStopped": {
+    "message": "Stopped after $P1$ links.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkDone": {
+    "message": "Checked $P1$ links.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkUnknown": {
+    "message": "$P1$ gave no clear answer (timeout, login wall, rate limit) and are left alone.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkOfflineHint": {
+    "message": "Almost no site answered: the network may be down, so nothing is pre-selected."
+  },
+  "applied": {
+    "message": "$P1$ set to $P2$.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "appliedFailed": {
+    "message": "$P1$ could not be updated (changed on disk?).",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "importH": {
+    "message": "Import Chrome bookmarks"
+  },
+  "importIntro": {
+    "message": "Reads your Chrome bookmarks (Chrome asks for permission once) and writes one note per link, skipping links the folder already holds. Pick the folders to import."
+  },
+  "importRead": {
+    "message": "Read Chrome bookmarks"
+  },
+  "importTop": {
+    "message": "(top level)"
+  },
+  "importCategory": {
+    "message": "Use the bookmark folder as the category"
+  },
+  "importDate": {
+    "message": "Keep the date the bookmark was added"
+  },
+  "importGoOne": {
+    "message": "Import 1 new link"
+  },
+  "importGoMany": {
+    "message": "Import $P1$ new links",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "errBookmarksPerm": {
+    "message": "Permission to read bookmarks was not granted."
+  },
+  "importFound": {
+    "message": "$P1$ http(s) bookmarks found.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "importProgress": {
+    "message": "$P1$ of $P2$…",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "importDoneOne": {
+    "message": "Imported 1 note."
+  },
+  "importDoneMany": {
+    "message": "Imported $P1$ notes.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "importFailed": {
+    "message": "$P1$ failed.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportH": {
+    "message": "Export"
+  },
+  "exportIntro": {
+    "message": "Downloads your links as a bookmarks file (HTML) that Chrome, Firefox, Safari and Edge can import. Categories become folders and tags are kept where the browser supports them."
+  },
+  "exportDead": {
+    "message": "Include Dead links"
+  },
+  "exportGo": {
+    "message": "Download bookmarks.html"
+  },
+  "exportDone": {
+    "message": "$P1$ links exported.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "sTitle": {
+    "message": "Vault Bookmarks"
+  },
+  "sIntro1": {
+    "message": "Pick the folder that holds your bookmark notes (one note per link). The extension reads and writes only inside that folder, straight from disk. Nothing is sent anywhere."
+  },
+  "sIntro2": {
+    "message": "Pick the bookmarks folder itself, not the whole vault."
+  },
+  "sCurrent": {
+    "message": "Current folder"
+  },
+  "sNone": {
+    "message": "None chosen yet"
+  },
+  "sPickHint": {
+    "message": "Pick the folder that holds your bookmark notes."
+  },
+  "sChoose": {
+    "message": "Choose folder"
+  },
+  "sRegrant": {
+    "message": "Allow access again"
+  },
+  "sExpired": {
+    "message": "Access has expired: press \"Allow access again\"."
+  },
+  "sRead": {
+    "message": "$P1$ bookmark notes read, access allowed (for example: $P2$). Chrome shares only the folder name, not its path.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "sEmpty": {
+    "message": "Access allowed, but no bookmark note found yet: saved links will appear here."
+  },
+  "sUnreadable": {
+    "message": "The folder cannot be read ($P1$). Choose it again.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "sCouldNotOpen": {
+    "message": "Could not open the folder: $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "sVaultRoot": {
+    "message": "That looks like the whole vault (it holds .obsidian). Pick its bookmarks folder instead."
+  },
+  "sReadErr": {
+    "message": "Could not read the saved folder: $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "sFormatH": {
+    "message": "Note format"
+  },
+  "sFormatIntro": {
+    "message": "How the extension recognises and writes a bookmark note. The defaults suit most folders; change them to match yours. Names are the frontmatter properties of the notes."
+  },
+  "sHelp": {
+    "message": "Leave a property name empty to turn that field off. A status of Dead greys a link out. Hover a field for its meaning."
+  },
+  "sSubfolders": {
+    "message": "Also read the notes in subfolders"
+  },
+  "sSubfoldersHelp": {
+    "message": "Off by default. When on, a note with no category takes the name of its top-level subfolder as its category. New links are still saved at the top of the folder."
+  },
+  "sBody": {
+    "message": "Text under the properties"
+  },
+  "sBodyHelp": {
+    "message": "Optional. Written under the properties of every new note, for example a link to your hub."
+  },
+  "sSaveFormat": {
+    "message": "Save format"
+  },
+  "sReset": {
+    "message": "Reset to defaults"
+  },
+  "sSaved": {
+    "message": "Saved. Reopen the popup to use it."
+  },
+  "sDefaultsRestored": {
+    "message": "Defaults restored: press \"Save format\" to keep them."
+  },
+  "fMarker": {
+    "message": "Marker property"
+  },
+  "hMarker": {
+    "message": "The property that says a note is a bookmark"
+  },
+  "fMarkerValue": {
+    "message": "Marker value"
+  },
+  "hMarkerValue": {
+    "message": "The value of the marker property"
+  },
+  "fUrl": {
+    "message": "Link property"
+  },
+  "hUrl": {
+    "message": "The property that holds the address"
+  },
+  "fMarkerTag": {
+    "message": "Tag on every note"
+  },
+  "hMarkerTag": {
+    "message": "Written on each new note; empty for none"
+  },
+  "fCategory": {
+    "message": "Category property"
+  },
+  "hCategory": {
+    "message": "Empty turns the category field off"
+  },
+  "fDescription": {
+    "message": "Description property"
+  },
+  "hDescription": {
+    "message": "Empty turns the description field off"
+  },
+  "fStatus": {
+    "message": "Status property"
+  },
+  "hStatus": {
+    "message": "Empty turns it off; a value of Dead greys a link out"
+  },
+  "fCreated": {
+    "message": "Creation date property"
+  },
+  "hCreated": {
+    "message": "Empty turns it off"
+  },
+  "fFavorite": {
+    "message": "Favorite property"
+  },
+  "hFavorite": {
+    "message": "A checkbox set by the star; empty turns favorites off"
+  }
+}

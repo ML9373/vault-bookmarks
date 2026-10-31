@@ -26,11 +26,18 @@ else await saveHandle(dir);
 
 if (q.has('settings')) await saveSettings(JSON.parse(q.get('settings')));
 
+// Texts: the catalog of ?lang= (else the browser's language, else English), English as fallback.
+const lang = q.get('lang') || (navigator.language || 'en').slice(0, 2);
+const catalog = async (l) => { try { return await (await fetch(`${root_url}_locales/${l}/messages.json`)).json(); } catch { return {}; } };
+const en = await catalog('en');
+const local = lang === 'en' ? en : await catalog(lang);
 window.__dir = dir;
 window.__opened = [];
 window.__vbTest = {
   getActiveTab: async () => ({ title: q.get('title') || 'Guide: New page | Example Docs', url: q.get('url') || 'https://docs.example.com/guide/new/page' }),
   openUrl: (url, active) => { window.__opened.push({ url, active }); },
+  lang,
+  msg: (key, subs) => (local[key] || en[key])?.message.replace(/\$P(\d)\$/g, (_, n) => subs[n - 1] ?? ''),
   setupUrl: `${root_url}setup.html`,
   manageUrl: `${root_url}manage.html`,
   getWindowTabs: async () => [

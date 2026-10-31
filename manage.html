@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Vault Bookmarks tools</title>
+  <title>Vault Bookmarks</title>
   <link rel="stylesheet" href="popup.css">
   <style>
     body { width: auto; max-width: 720px; margin: 32px auto; padding: 0 16px; max-height: none; display: block; font-size: 13px; }
@@ -23,40 +23,46 @@
   </style>
 </head>
 <body>
-  <h1>Vault Bookmarks tools</h1>
+  <h1 data-i18n="mTitle">Vault Bookmarks tools</h1>
   <p id="state" role="status"></p>
-  <div class="row"><button id="allow" class="primary" hidden>Allow access to the folder</button></div>
+  <div class="row"><button id="allow" class="primary" hidden data-i18n="mAllowBtn">Allow access to the folder</button></div>
 
   <section id="tools" hidden>
-    <h2>Check links</h2>
-    <p>Asks each site if the page still exists (a HEAD request, then GET when the site refuses it). Chrome asks once for permission to reach websites; nothing else leaves your machine, and no note is changed until you choose. A page that answers 404 or 410, or a site that does not answer at all, is proposed as <b>Dead</b>; a link marked Dead that answers again is proposed as <b>Active</b>.</p>
-    <p id="check-off" class="error" hidden>Turn on the status property in the setup page first: the check needs somewhere to write it.</p>
+    <h2 data-i18n="checkH">Check links</h2>
+    <p data-i18n="checkIntro">Asks each site if the page still exists (a HEAD request, then GET when the site refuses it). Chrome asks once for permission to reach websites; nothing else leaves your machine, and no note is changed until you choose. A page that answers 404 or 410, or a site that does not answer at all, is proposed as <b>Dead</b>; a link marked Dead that answers again is proposed as <b>Active</b>.</p>
+    <p id="check-off" class="error" hidden data-i18n="checkOff"></p>
     <div class="row">
-      <button id="check-start" class="primary">Check links</button>
-      <button id="check-stop" class="secondary" hidden>Stop</button>
+      <button id="check-start" class="primary" data-i18n="checkStart">Check links</button>
+      <button id="check-stop" class="secondary" hidden data-i18n="checkStop">Stop</button>
       <span id="check-progress" class="sub"></span>
     </div>
     <div class="bar" id="check-bar" hidden><div></div></div>
     <div id="check-results" hidden>
       <h3 id="broken-title"></h3>
       <ul class="list" id="broken"></ul>
-      <div class="row"><button id="mark-dead" class="primary">Mark selected as Dead</button></div>
+      <div class="row"><button id="mark-dead" class="primary" data-i18n="markDead">Mark selected as Dead</button></div>
       <h3 id="back-title"></h3>
       <ul class="list" id="back"></ul>
-      <div class="row"><button id="mark-active" class="primary">Mark selected as Active</button></div>
+      <div class="row"><button id="mark-active" class="primary" data-i18n="markActive">Mark selected as Active</button></div>
     </div>
     <p id="check-status" role="status"></p>
 
-    <h2>Import Chrome bookmarks</h2>
-    <p>Reads your Chrome bookmarks (Chrome asks for permission once) and writes one note per link, skipping links the folder already holds. Pick the folders to import.</p>
-    <div class="row"><button id="import-read" class="secondary">Read Chrome bookmarks</button></div>
+    <h2 data-i18n="importH">Import Chrome bookmarks</h2>
+    <p data-i18n="importIntro">Reads your Chrome bookmarks (Chrome asks for permission once) and writes one note per link, skipping links the folder already holds. Pick the folders to import.</p>
+    <div class="row"><button id="import-read" class="secondary" data-i18n="importRead">Read Chrome bookmarks</button></div>
     <div id="import-box" hidden>
       <ul class="list" id="import-folders"></ul>
-      <label class="inline"><input type="checkbox" id="import-category" checked> Use the bookmark folder as the category</label>
-      <label class="inline"><input type="checkbox" id="import-date" checked> Keep the date the bookmark was added</label>
+      <label class="inline"><input type="checkbox" id="import-category" checked> <span data-i18n="importCategory">Use the bookmark folder as the category</span></label>
+      <label class="inline"><input type="checkbox" id="import-date" checked> <span data-i18n="importDate">Keep the date the bookmark was added</span></label>
       <div class="row"><button id="import-go" class="primary"></button></div>
     </div>
     <p id="import-status" role="status"></p>
+
+    <h2 data-i18n="exportH">Export</h2>
+    <p data-i18n="exportIntro"></p>
+    <label class="inline"><input type="checkbox" id="export-dead"> <span data-i18n="exportDead">Include Dead links</span></label>
+    <div class="row"><button id="export-go" class="secondary" data-i18n="exportGo">Download bookmarks.html</button></div>
+    <p id="export-status" role="status"></p>
   </section>
   <script type="module" src="manage.js"></script>
 </body>

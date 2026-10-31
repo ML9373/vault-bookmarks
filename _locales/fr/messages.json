@@ -1,0 +1,832 @@
+{
+  "extName": {
+    "message": "Vault Bookmarks"
+  },
+  "extDescription": {
+    "message": "Trouvez, enregistrez, modifiez et nettoyez vos liens dans un dossier de notes Markdown, lu directement sur le disque. Ni serveur, ni compte."
+  },
+  "actionTitle": {
+    "message": "Vault Bookmarks"
+  },
+  "commandDesc": {
+    "message": "Ouvrir Vault Bookmarks"
+  },
+  "menuSaveLink": {
+    "message": "Enregistrer le lien dans le coffre"
+  },
+  "menuSavePage": {
+    "message": "Enregistrer la page dans le coffre"
+  },
+  "tabFind": {
+    "message": "Chercher"
+  },
+  "tabSave": {
+    "message": "Enregistrer"
+  },
+  "toolsTitle": {
+    "message": "Outils : vérifier les liens, exporter, importer les favoris Chrome"
+  },
+  "toolsLabel": {
+    "message": "Ouvrir les outils"
+  },
+  "settingsTitle": {
+    "message": "Réglages : dossier et format des notes"
+  },
+  "settingsLabel": {
+    "message": "Ouvrir les réglages"
+  },
+  "searchPlaceholder": {
+    "message": "Chercher titre, catégorie, lien"
+  },
+  "searchLabel": {
+    "message": "Chercher des liens"
+  },
+  "allTags": {
+    "message": "Tous les tags"
+  },
+  "filterTagLabel": {
+    "message": "Filtrer par tag"
+  },
+  "showLabel": {
+    "message": "Afficher"
+  },
+  "viewRecent": {
+    "message": "Récents"
+  },
+  "viewFavorites": {
+    "message": "Favoris"
+  },
+  "viewTop": {
+    "message": "Top"
+  },
+  "viewAll": {
+    "message": "Tous"
+  },
+  "linksLabel": {
+    "message": "Liens"
+  },
+  "noMatch": {
+    "message": "Aucun lien ne correspond."
+  },
+  "fieldName": {
+    "message": "Nom"
+  },
+  "fieldTitle": {
+    "message": "Titre"
+  },
+  "fieldLink": {
+    "message": "Lien"
+  },
+  "fieldCategory": {
+    "message": "Catégorie"
+  },
+  "fieldDescription": {
+    "message": "Description"
+  },
+  "fieldStatus": {
+    "message": "Statut"
+  },
+  "optional": {
+    "message": "facultatif"
+  },
+  "pickOrType": {
+    "message": "Choisir ou saisir un nouveau"
+  },
+  "saveButton": {
+    "message": "Enregistrer dans le coffre"
+  },
+  "editSave": {
+    "message": "Enregistrer les modifications"
+  },
+  "cancel": {
+    "message": "Annuler"
+  },
+  "delete": {
+    "message": "Supprimer"
+  },
+  "tagsLabel": {
+    "message": "Tags"
+  },
+  "tagsHint": {
+    "message": "facultatif, Entrée ou virgule en ajoute un"
+  },
+  "tagRemove": {
+    "message": "Retirer $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "frequentTags": {
+    "message": "Tags fréquents"
+  },
+  "msgChoose": {
+    "message": "Choisissez le dossier qui contient vos notes de favoris."
+  },
+  "openSetup": {
+    "message": "Ouvrir les réglages"
+  },
+  "msgAllow": {
+    "message": "Chrome demande d’autoriser à nouveau l’accès au dossier."
+  },
+  "allowAccess": {
+    "message": "Autoriser l’accès"
+  },
+  "msgFolderErr": {
+    "message": "Le dossier est illisible ($P1$). Choisissez-le à nouveau.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "emptyRecent": {
+    "message": "Les liens que vous ouvrez d’ici apparaissent ici."
+  },
+  "emptyFavorites": {
+    "message": "Aucun favori : cliquez sur l’étoile à côté d’un lien."
+  },
+  "emptyTop": {
+    "message": "Les liens ouverts d’ici sont comptés : les plus ouverts en premier."
+  },
+  "emptyDuplicates": {
+    "message": "Aucun doublon : chaque lien est enregistré une seule fois."
+  },
+  "actRemoveFav": {
+    "message": "Retirer des favoris"
+  },
+  "actAddFav": {
+    "message": "Ajouter aux favoris"
+  },
+  "actEdit": {
+    "message": "Modifier (Ctrl ou Cmd+E)"
+  },
+  "actDelete": {
+    "message": "Supprimer"
+  },
+  "deleteArmed": {
+    "message": "Supprimer pour de bon ?"
+  },
+  "deleteArmedLabel": {
+    "message": "Cliquez à nouveau pour supprimer cette note pour de bon"
+  },
+  "noCategory": {
+    "message": "Sans catégorie"
+  },
+  "dupesBack": {
+    "message": "Retour à tous"
+  },
+  "dupesOne": {
+    "message": "1 doublon"
+  },
+  "dupesMany": {
+    "message": "$P1$ doublons",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "linkOne": {
+    "message": "1 lien"
+  },
+  "linkMany": {
+    "message": "$P1$ liens",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "countCapped": {
+    "message": "$P1$ sur $P2$ liens",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "errUpdate": {
+    "message": "Impossible de mettre à jour « $P1$ » : $P2$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "errDelete": {
+    "message": "Impossible de supprimer « $P1$ » : $P2$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "toastDeleted": {
+    "message": "« $P1$ » supprimée.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "toastDeletedMany": {
+    "message": "$P1$ notes supprimées.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "undo": {
+    "message": "Annuler"
+  },
+  "toastRestored": {
+    "message": "Restaurée."
+  },
+  "errRestore": {
+    "message": "Impossible de restaurer : $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "selectToggle": {
+    "message": "Sélectionner"
+  },
+  "selectDone": {
+    "message": "Terminer"
+  },
+  "selectAll": {
+    "message": "Tout sélectionner (liste)"
+  },
+  "selectedN": {
+    "message": "$P1$ sélectionné(s)",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bulkTagPlaceholder": {
+    "message": "Tag à ajouter"
+  },
+  "bulkAddTag": {
+    "message": "Ajouter le tag"
+  },
+  "bulkCatPlaceholder": {
+    "message": "Catégorie à définir"
+  },
+  "bulkSetCat": {
+    "message": "Définir la catégorie"
+  },
+  "bulkDelete": {
+    "message": "Supprimer la sélection"
+  },
+  "bulkDeleteArmed": {
+    "message": "Supprimer $P1$ pour de bon ?",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bulkUpdated": {
+    "message": "$P1$ modifiée(s).",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "bulkFailed": {
+    "message": "$P1$ en échec.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "editFile": {
+    "message": "$P1$ : le fichier garde son nom, les liens vers lui continuent de marcher.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "errTitleEmpty": {
+    "message": "Le titre est vide."
+  },
+  "errUrlBad": {
+    "message": "Le lien doit être une adresse http(s)."
+  },
+  "errTagBad": {
+    "message": "Ce tag n’est pas valide : lettres, chiffres, « _ », « - » ou « / », avec au moins un caractère non numérique."
+  },
+  "errUrlDup": {
+    "message": "Une autre note contient déjà ce lien."
+  },
+  "errEditWrite": {
+    "message": "Impossible de modifier la note : $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "noPage": {
+    "message": "Aucune page"
+  },
+  "errNotSavable": {
+    "message": "Cette page ne peut pas être enregistrée : seuls les liens http(s) sont conservés."
+  },
+  "alreadySaved": {
+    "message": "Déjà enregistré sous « $P1$ ».",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "alreadySavedIn": {
+    "message": "Déjà enregistré sous « $P1$ » ($P2$).",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "saveToFolder": {
+    "message": "Enregistrer dans « $P1$ »",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "saveAllN": {
+    "message": "Enregistrer les $P1$ onglets ouverts",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "saveAllConfirm": {
+    "message": "Écrire $P1$ notes ? Cliquez à nouveau",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "saveAllHint": {
+    "message": "Chaque onglet reçoit la catégorie et le tag déjà utilisés par les notes de son site."
+  },
+  "savedOne": {
+    "message": "1 note enregistrée"
+  },
+  "savedMany": {
+    "message": "$P1$ notes enregistrées",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "failedN": {
+    "message": "$P1$ en échec",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "errNameEmpty": {
+    "message": "Le nom est vide une fois les caractères interdits retirés."
+  },
+  "errNameClash": {
+    "message": "Une note nommée « $P1$ » existe déjà. Choisissez un autre nom.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "errWrite": {
+    "message": "Impossible d’écrire la note : $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "savedAs": {
+    "message": "Enregistré sous « $P1$ ».",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "mTitle": {
+    "message": "Outils Vault Bookmarks"
+  },
+  "mAllowBtn": {
+    "message": "Autoriser l’accès au dossier"
+  },
+  "mNoFolder": {
+    "message": "Aucun dossier choisi : ouvrez les réglages depuis le popup."
+  },
+  "mDenied": {
+    "message": "L’accès n’a pas été accordé."
+  },
+  "mNotes": {
+    "message": "$P1$ notes de favoris dans « $P2$ ».",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "mStartErr": {
+    "message": "Démarrage impossible : $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkH": {
+    "message": "Vérifier les liens"
+  },
+  "checkIntro": {
+    "message": "Demande à chaque site si la page existe encore (requête HEAD, puis GET si le site la refuse). Chrome demande une fois l’autorisation d’accéder aux sites web ; rien d’autre ne quitte votre machine, et aucune note n’est modifiée avant votre choix. Une page qui répond 404 ou 410, ou un site qui ne répond pas du tout, est proposée comme Dead ; un lien marqué Dead qui répond à nouveau est proposé comme Active."
+  },
+  "checkOff": {
+    "message": "Activez d’abord la propriété de statut dans les réglages : la vérification a besoin d’un endroit où l’écrire."
+  },
+  "checkStart": {
+    "message": "Vérifier les liens"
+  },
+  "checkStop": {
+    "message": "Arrêter"
+  },
+  "checkProgress": {
+    "message": "$P1$ sur $P2$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "markDead": {
+    "message": "Marquer la sélection comme Dead"
+  },
+  "markActive": {
+    "message": "Marquer la sélection comme Active"
+  },
+  "brokenOne": {
+    "message": "1 lien à marquer comme Dead"
+  },
+  "brokenMany": {
+    "message": "$P1$ liens à marquer comme Dead",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "backOne": {
+    "message": "1 lien Dead répond à nouveau"
+  },
+  "backMany": {
+    "message": "$P1$ liens Dead répondent à nouveau",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "offlineNow": {
+    "message": "Vous êtes hors ligne."
+  },
+  "errOrigins": {
+    "message": "L’autorisation d’accéder aux sites web n’a pas été accordée : la vérification ne peut pas se lancer."
+  },
+  "detailNoAnswer": {
+    "message": "pas de réponse"
+  },
+  "checkStopped": {
+    "message": "Arrêtée après $P1$ liens.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkDone": {
+    "message": "$P1$ liens vérifiés.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkUnknown": {
+    "message": "$P1$ sans réponse claire (délai dépassé, page de connexion, limite de débit) : laissés tels quels.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkOfflineHint": {
+    "message": "Presque aucun site n’a répondu : le réseau est peut-être coupé, rien n’est présélectionné."
+  },
+  "applied": {
+    "message": "Statut $P2$ appliqué à : $P1$.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "appliedFailed": {
+    "message": "$P1$ non modifié(s) (changé sur le disque ?).",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "importH": {
+    "message": "Importer les favoris Chrome"
+  },
+  "importIntro": {
+    "message": "Lit vos favoris Chrome (Chrome demande l’autorisation une fois) et écrit une note par lien, en ignorant les liens que le dossier contient déjà. Choisissez les dossiers à importer."
+  },
+  "importRead": {
+    "message": "Lire les favoris Chrome"
+  },
+  "importTop": {
+    "message": "(racine)"
+  },
+  "importCategory": {
+    "message": "Utiliser le dossier du favori comme catégorie"
+  },
+  "importDate": {
+    "message": "Garder la date d’ajout du favori"
+  },
+  "importGoOne": {
+    "message": "Importer 1 nouveau lien"
+  },
+  "importGoMany": {
+    "message": "Importer $P1$ nouveaux liens",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "errBookmarksPerm": {
+    "message": "L’autorisation de lire les favoris n’a pas été accordée."
+  },
+  "importFound": {
+    "message": "$P1$ favoris http(s) trouvés.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "importProgress": {
+    "message": "$P1$ sur $P2$…",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "importDoneOne": {
+    "message": "1 note importée."
+  },
+  "importDoneMany": {
+    "message": "$P1$ notes importées.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "importFailed": {
+    "message": "$P1$ en échec.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "exportH": {
+    "message": "Exporter"
+  },
+  "exportIntro": {
+    "message": "Télécharge vos liens dans un fichier de favoris (HTML) que Chrome, Firefox, Safari et Edge savent importer. Les catégories deviennent des dossiers, les tags sont conservés là où le navigateur les gère."
+  },
+  "exportDead": {
+    "message": "Inclure les liens Dead"
+  },
+  "exportGo": {
+    "message": "Télécharger bookmarks.html"
+  },
+  "exportDone": {
+    "message": "$P1$ liens exportés.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "sTitle": {
+    "message": "Vault Bookmarks"
+  },
+  "sIntro1": {
+    "message": "Choisissez le dossier qui contient vos notes de favoris (une note par lien). L’extension lit et écrit uniquement dans ce dossier, directement sur le disque. Rien n’est envoyé nulle part."
+  },
+  "sIntro2": {
+    "message": "Choisissez le dossier des favoris lui-même, pas le coffre entier."
+  },
+  "sCurrent": {
+    "message": "Dossier actuel"
+  },
+  "sNone": {
+    "message": "Aucun pour l’instant"
+  },
+  "sPickHint": {
+    "message": "Choisissez le dossier qui contient vos notes de favoris."
+  },
+  "sChoose": {
+    "message": "Choisir le dossier"
+  },
+  "sRegrant": {
+    "message": "Autoriser à nouveau l’accès"
+  },
+  "sExpired": {
+    "message": "L’accès a expiré : appuyez sur « Autoriser à nouveau l’accès »."
+  },
+  "sRead": {
+    "message": "$P1$ notes de favoris lues, accès autorisé (par exemple : $P2$). Chrome ne partage que le nom du dossier, pas son chemin.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      },
+      "p2": {
+        "content": "$2"
+      }
+    }
+  },
+  "sEmpty": {
+    "message": "Accès autorisé, mais aucune note de favori pour l’instant : les liens enregistrés apparaîtront ici."
+  },
+  "sUnreadable": {
+    "message": "Le dossier est illisible ($P1$). Choisissez-le à nouveau.",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "sCouldNotOpen": {
+    "message": "Impossible d’ouvrir le dossier : $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "sVaultRoot": {
+    "message": "Cela ressemble au coffre entier (il contient .obsidian). Choisissez plutôt son dossier de favoris."
+  },
+  "sReadErr": {
+    "message": "Impossible de lire le dossier enregistré : $P1$",
+    "placeholders": {
+      "p1": {
+        "content": "$1"
+      }
+    }
+  },
+  "sFormatH": {
+    "message": "Format des notes"
+  },
+  "sFormatIntro": {
+    "message": "Comment l’extension reconnaît et écrit une note de favori. Les valeurs par défaut conviennent à la plupart des dossiers ; adaptez-les au vôtre. Les noms sont les propriétés du frontmatter des notes."
+  },
+  "sHelp": {
+    "message": "Laissez un nom de propriété vide pour désactiver ce champ. Un statut Dead grise le lien. Survolez un champ pour sa signification."
+  },
+  "sSubfolders": {
+    "message": "Lire aussi les notes des sous-dossiers"
+  },
+  "sSubfoldersHelp": {
+    "message": "Désactivé par défaut. Activé, une note sans catégorie prend le nom de son sous-dossier de premier niveau comme catégorie. Les nouveaux liens restent enregistrés à la racine du dossier."
+  },
+  "sBody": {
+    "message": "Texte sous les propriétés"
+  },
+  "sBodyHelp": {
+    "message": "Facultatif. Écrit sous les propriétés de chaque nouvelle note, par exemple un lien vers votre hub."
+  },
+  "sSaveFormat": {
+    "message": "Enregistrer le format"
+  },
+  "sReset": {
+    "message": "Rétablir les valeurs par défaut"
+  },
+  "sSaved": {
+    "message": "Enregistré. Rouvrez le popup pour l’utiliser."
+  },
+  "sDefaultsRestored": {
+    "message": "Valeurs par défaut rétablies : appuyez sur « Enregistrer le format » pour les garder."
+  },
+  "fMarker": {
+    "message": "Propriété marqueur"
+  },
+  "hMarker": {
+    "message": "La propriété qui indique qu’une note est un favori"
+  },
+  "fMarkerValue": {
+    "message": "Valeur du marqueur"
+  },
+  "hMarkerValue": {
+    "message": "La valeur de la propriété marqueur"
+  },
+  "fUrl": {
+    "message": "Propriété du lien"
+  },
+  "hUrl": {
+    "message": "La propriété qui contient l’adresse"
+  },
+  "fMarkerTag": {
+    "message": "Tag sur chaque note"
+  },
+  "hMarkerTag": {
+    "message": "Écrit sur chaque nouvelle note ; vide pour aucun"
+  },
+  "fCategory": {
+    "message": "Propriété de la catégorie"
+  },
+  "hCategory": {
+    "message": "Vide : désactive le champ catégorie"
+  },
+  "fDescription": {
+    "message": "Propriété de la description"
+  },
+  "hDescription": {
+    "message": "Vide : désactive le champ description"
+  },
+  "fStatus": {
+    "message": "Propriété du statut"
+  },
+  "hStatus": {
+    "message": "Vide : désactivé ; la valeur Dead grise un lien"
+  },
+  "fCreated": {
+    "message": "Propriété de la date de création"
+  },
+  "hCreated": {
+    "message": "Vide : désactivé"
+  },
+  "fFavorite": {
+    "message": "Propriété du favori"
+  },
+  "hFavorite": {
+    "message": "Une case cochée par l’étoile ; vide : désactive les favoris"
+  }
+}

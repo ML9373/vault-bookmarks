@@ -1,5 +1,8 @@
 import { saveHandle, loadHandle, saveSettings, loadSettings, permissionState, requestPermission, readIndex, looksLikeVaultRoot } from './lib/vault.js';
 import { DEFAULTS, validate, normalize } from './lib/settings.js';
+import { msg, localize } from './lib/i18n.js';
+
+localize();
 
 const $ = (id) => document.getElementById(id);
 const say = (text, cls = '') => { $('status').textContent = text; $('status').className = cls; };
@@ -11,17 +14,15 @@ async function showCurrent(handle, access) {
   const problem = (text) => { $('cur-detail').textContent = text; $('current').classList.add('problem'); };
   if (access !== 'granted') {
     $('regrant').hidden = false;
-    return problem('Access has expired: press "Allow access again".');
+    return problem(msg('sExpired'));
   }
   $('regrant').hidden = true;
   try {
     const items = await readIndex(handle, await loadSettings());
     const sample = items.map((i) => i.title).sort((a, b) => a.localeCompare(b)).slice(0, 3).join(', ');
-    $('cur-detail').textContent = items.length
-      ? `${items.length} bookmark notes read, access allowed (for example: ${sample}). Chrome shares only the folder name, not its path.`
-      : 'Access allowed, but no bookmark note found yet: saved links will appear here.';
+    $('cur-detail').textContent = items.length ? msg('sRead', items.length, sample) : msg('sEmpty');
   } catch (e) {
-    problem(`The folder cannot be read (${e.name}). Choose it again.`);
+    problem(msg('sUnreadable', e.name));
   }
 }
 
@@ -36,9 +37,9 @@ $('pick').addEventListener('click', async () => {
   try {
     handle = await showDirectoryPicker({ id: 'vault-bookmarks', mode: 'readwrite' });
   } catch (e) {
-    return e.name === 'AbortError' ? undefined : say(`Could not open the folder: ${e.message}`, 'error');
+    return e.name === 'AbortError' ? undefined : say(msg('sCouldNotOpen', e.message), 'error');
   }
-  if (await looksLikeVaultRoot(handle)) return say('That looks like the whole vault (it holds .obsidian). Pick its bookmarks folder instead.', 'error');
+  if (await looksLikeVaultRoot(handle)) return say(msg('sVaultRoot'), 'error');
   await saveHandle(handle);
   say('');
   await showCurrent(handle, 'granted');
@@ -47,27 +48,29 @@ $('pick').addEventListener('click', async () => {
 $('regrant').addEventListener('click', async () => {
   const handle = await loadHandle();
   if ((await requestPermission(handle)) === 'granted') { say(''); await showCurrent(handle, 'granted'); }
-  else say('Access was not granted.', 'error');
+  else say(msg('mDenied'), 'error');
 });
 
-init().catch((e) => say(`Could not read the saved folder: ${e.message}`, 'error'));
+init().catch((e) => say(msg('sReadErr', e.message), 'error'));
 
 // ---- note format -------------------------------------------------------------------------
 
 const FIELDS = [
-  ['markerProperty', 'Marker property', 'The property that says a note is a bookmark'],
-  ['markerValue', 'Marker value', 'The value of the marker property'],
-  ['urlProperty', 'Link property', 'The property that holds the address'],
-  ['markerTag', 'Tag on every note', 'Written on each new note; empty for none'],
-  ['categoryProperty', 'Category property', 'Empty turns the category field off'],
-  ['descriptionProperty', 'Description property', 'Empty turns the description field off'],
-  ['statusProperty', 'Status property', 'Empty turns it off; a value of Dead greys a link out'],
-  ['createdProperty', 'Creation date property', 'Empty turns it off'],
-  ['favoriteProperty', 'Favorite property', 'A checkbox set by the star; empty turns favorites off'],
+  ['markerProperty', 'fMarker', 'hMarker'],
+  ['markerValue', 'fMarkerValue', 'hMarkerValue'],
+  ['urlProperty', 'fUrl', 'hUrl'],
+  ['markerTag', 'fMarkerTag', 'hMarkerTag'],
+  ['categoryProperty', 'fCategory', 'hCategory'],
+  ['descriptionProperty', 'fDescription', 'hDescription'],
+  ['statusProperty', 'fStatus', 'hStatus'],
+  ['createdProperty', 'fCreated', 'hCreated'],
+  ['favoriteProperty', 'fFavorite', 'hFavorite'],
 ];
 
 const inputs = {};
-for (const [key, label, hint] of FIELDS) {
+for (const [key, labelKey, hintKey] of FIELDS) {
+  const label = msg(labelKey);
+  const hint = msg(hintKey);
   const wrap = document.createElement('label');
   wrap.className = 's-field';
   wrap.title = hint;
@@ -103,12 +106,12 @@ $('settings-form').addEventListener('submit', async (e) => {
   const value = normalize(read());
   await saveSettings(value);
   fill(value);
-  $('settings-status').textContent = 'Saved. Reopen the popup to use it.';
+  $('settings-status').textContent = msg('sSaved');
 });
 
 $('settings-reset').addEventListener('click', () => {
   fill(DEFAULTS);
-  $('settings-status').textContent = 'Defaults restored: press "Save format" to keep them.';
+  $('settings-status').textContent = msg('sDefaultsRestored');
 });
 
 loadSettings().then(fill);
